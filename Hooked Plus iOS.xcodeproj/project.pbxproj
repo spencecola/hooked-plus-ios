@@ -1,0 +1,563 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		80EC4E182E6B9A730019A461 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80EC4E022E6B9A6E0019A461 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 80EC4E092E6B9A6E0019A461;
+			remoteInfo = "Hooked Plus iOS";
+		};
+		80EC4E222E6B9A730019A461 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 80EC4E022E6B9A6E0019A461 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 80EC4E092E6B9A6E0019A461;
+			remoteInfo = "Hooked Plus iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hooked Plus iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		80EC4E172E6B9A730019A461 /* Hooked Plus iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hooked Plus iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		80EC4E212E6B9A730019A461 /* Hooked Plus iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hooked Plus iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		80EC4E0C2E6B9A6E0019A461 /* Hooked Plus iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Hooked Plus iOS";
+			sourceTree = "<group>";
+		};
+		80EC4E1A2E6B9A730019A461 /* Hooked Plus iOSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Hooked Plus iOSTests";
+			sourceTree = "<group>";
+		};
+		80EC4E242E6B9A730019A461 /* Hooked Plus iOSUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Hooked Plus iOSUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		80EC4E072E6B9A6E0019A461 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EC4E142E6B9A730019A461 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EC4E1E2E6B9A730019A461 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		80EC4E012E6B9A6E0019A461 = {
+			isa = PBXGroup;
+			children = (
+				80EC4E0C2E6B9A6E0019A461 /* Hooked Plus iOS */,
+				80EC4E1A2E6B9A730019A461 /* Hooked Plus iOSTests */,
+				80EC4E242E6B9A730019A461 /* Hooked Plus iOSUITests */,
+				80EC4E0B2E6B9A6E0019A461 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		80EC4E0B2E6B9A6E0019A461 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */,
+				80EC4E172E6B9A730019A461 /* Hooked Plus iOSTests.xctest */,
+				80EC4E212E6B9A730019A461 /* Hooked Plus iOSUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		80EC4E092E6B9A6E0019A461 /* Hooked Plus iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80EC4E2B2E6B9A730019A461 /* Build configuration list for PBXNativeTarget "Hooked Plus iOS" */;
+			buildPhases = (
+				80EC4E062E6B9A6E0019A461 /* Sources */,
+				80EC4E072E6B9A6E0019A461 /* Frameworks */,
+				80EC4E082E6B9A6E0019A461 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				80EC4E0C2E6B9A6E0019A461 /* Hooked Plus iOS */,
+			);
+			name = "Hooked Plus iOS";
+			packageProductDependencies = (
+			);
+			productName = "Hooked Plus iOS";
+			productReference = 80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		80EC4E162E6B9A730019A461 /* Hooked Plus iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80EC4E2E2E6B9A730019A461 /* Build configuration list for PBXNativeTarget "Hooked Plus iOSTests" */;
+			buildPhases = (
+				80EC4E132E6B9A730019A461 /* Sources */,
+				80EC4E142E6B9A730019A461 /* Frameworks */,
+				80EC4E152E6B9A730019A461 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80EC4E192E6B9A730019A461 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				80EC4E1A2E6B9A730019A461 /* Hooked Plus iOSTests */,
+			);
+			name = "Hooked Plus iOSTests";
+			packageProductDependencies = (
+			);
+			productName = "Hooked Plus iOSTests";
+			productReference = 80EC4E172E6B9A730019A461 /* Hooked Plus iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		80EC4E202E6B9A730019A461 /* Hooked Plus iOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80EC4E312E6B9A730019A461 /* Build configuration list for PBXNativeTarget "Hooked Plus iOSUITests" */;
+			buildPhases = (
+				80EC4E1D2E6B9A730019A461 /* Sources */,
+				80EC4E1E2E6B9A730019A461 /* Frameworks */,
+				80EC4E1F2E6B9A730019A461 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				80EC4E232E6B9A730019A461 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				80EC4E242E6B9A730019A461 /* Hooked Plus iOSUITests */,
+			);
+			name = "Hooked Plus iOSUITests";
+			packageProductDependencies = (
+			);
+			productName = "Hooked Plus iOSUITests";
+			productReference = 80EC4E212E6B9A730019A461 /* Hooked Plus iOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		80EC4E022E6B9A6E0019A461 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					80EC4E092E6B9A6E0019A461 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					80EC4E162E6B9A730019A461 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 80EC4E092E6B9A6E0019A461;
+					};
+					80EC4E202E6B9A730019A461 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 80EC4E092E6B9A6E0019A461;
+					};
+				};
+			};
+			buildConfigurationList = 80EC4E052E6B9A6E0019A461 /* Build configuration list for PBXProject "Hooked Plus iOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 80EC4E012E6B9A6E0019A461;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 80EC4E0B2E6B9A6E0019A461 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				80EC4E092E6B9A6E0019A461 /* Hooked Plus iOS */,
+				80EC4E162E6B9A730019A461 /* Hooked Plus iOSTests */,
+				80EC4E202E6B9A730019A461 /* Hooked Plus iOSUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		80EC4E082E6B9A6E0019A461 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EC4E152E6B9A730019A461 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EC4E1F2E6B9A730019A461 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		80EC4E062E6B9A6E0019A461 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EC4E132E6B9A730019A461 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80EC4E1D2E6B9A730019A461 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		80EC4E192E6B9A730019A461 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 80EC4E092E6B9A6E0019A461 /* Hooked Plus iOS */;
+			targetProxy = 80EC4E182E6B9A730019A461 /* PBXContainerItemProxy */;
+		};
+		80EC4E232E6B9A730019A461 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 80EC4E092E6B9A6E0019A461 /* Hooked Plus iOS */;
+			targetProxy = 80EC4E222E6B9A730019A461 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		80EC4E292E6B9A730019A461 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		80EC4E2A2E6B9A730019A461 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		80EC4E2C2E6B9A730019A461 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		80EC4E2D2E6B9A730019A461 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		80EC4E2F2E6B9A730019A461 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hooked Plus iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hooked Plus iOS";
+			};
+			name = Debug;
+		};
+		80EC4E302E6B9A730019A461 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hooked Plus iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Hooked Plus iOS";
+			};
+			name = Release;
+		};
+		80EC4E322E6B9A730019A461 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Hooked Plus iOS";
+			};
+			name = Debug;
+		};
+		80EC4E332E6B9A730019A461 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6F8849TX88;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Hooked Plus iOS";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		80EC4E052E6B9A6E0019A461 /* Build configuration list for PBXProject "Hooked Plus iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80EC4E292E6B9A730019A461 /* Debug */,
+				80EC4E2A2E6B9A730019A461 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80EC4E2B2E6B9A730019A461 /* Build configuration list for PBXNativeTarget "Hooked Plus iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80EC4E2C2E6B9A730019A461 /* Debug */,
+				80EC4E2D2E6B9A730019A461 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80EC4E2E2E6B9A730019A461 /* Build configuration list for PBXNativeTarget "Hooked Plus iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80EC4E2F2E6B9A730019A461 /* Debug */,
+				80EC4E302E6B9A730019A461 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80EC4E312E6B9A730019A461 /* Build configuration list for PBXNativeTarget "Hooked Plus iOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80EC4E322E6B9A730019A461 /* Debug */,
+				80EC4E332E6B9A730019A461 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 80EC4E022E6B9A6E0019A461 /* Project object */;
+}
