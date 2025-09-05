@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E472E6BA14B0019A461 /* FirebaseCore */; };
+		80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E492E6BA1520019A461 /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		80EC4E182E6B9A730019A461 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +57,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */,
+				80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +85,7 @@
 				80EC4E0C2E6B9A6E0019A461 /* Hooked Plus iOS */,
 				80EC4E1A2E6B9A730019A461 /* Hooked Plus iOSTests */,
 				80EC4E242E6B9A730019A461 /* Hooked Plus iOSUITests */,
+				80EC4E462E6BA14B0019A461 /* Frameworks */,
 				80EC4E0B2E6B9A6E0019A461 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +98,13 @@
 				80EC4E212E6B9A730019A461 /* Hooked Plus iOSUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		80EC4E462E6BA14B0019A461 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +127,8 @@
 			);
 			name = "Hooked Plus iOS";
 			packageProductDependencies = (
+				80EC4E472E6BA14B0019A461 /* FirebaseCore */,
+				80EC4E492E6BA1520019A461 /* FirebaseFirestore */,
 			);
 			productName = "Hooked Plus iOS";
 			productReference = 80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */;
@@ -195,6 +212,11 @@
 			);
 			mainGroup = 80EC4E012E6B9A6E0019A461;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				80EC4E352E6B9D480019A461 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				80EC4E362E6B9D990019A461 /* XCRemoteSwiftPackageReference "Swinject" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 80EC4E0B2E6B9A6E0019A461 /* Products */;
 			projectDirPath = "";
@@ -558,6 +580,46 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.2.0;
+			};
+		};
+		80EC4E352E6B9D480019A461 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		80EC4E362E6B9D990019A461 /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		80EC4E472E6BA14B0019A461 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		80EC4E492E6BA1520019A461 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 80EC4E022E6B9A6E0019A461 /* Project object */;
 }
