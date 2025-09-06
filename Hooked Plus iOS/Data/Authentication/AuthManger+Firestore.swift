@@ -9,6 +9,7 @@ import FirebaseAuth
 import FirebaseFirestore
 
 extension AuthManager {
+    /// creates a new user given a user authenticated
     func createUserDocument(user: User, firstName: String, lastName: String) async throws {
         guard let email = user.email else {
             throw UserError.missingEmail
@@ -22,19 +23,19 @@ extension AuthManager {
     
     func fetchUserData(completion: @escaping (Result<[String: Any], Error>) -> Void) {
         guard case .authenticated(let user) = state else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user signed in"])))
-                return
-            }
-
-            let db = Firestore.firestore()
-            db.collection("users").document(user.uid).getDocument { (document, error) in
-                if let error = error {
-                    completion(.failure(error))
-                } else if let document = document, document.exists, let data = document.data() {
-                    completion(.success(data))
-                } else {
-                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User document not found"])))
-                }
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user signed in"])))
+            return
+        }
+        
+        let db = Firestore.firestore()
+        db.collection("users").document(user.uid).getDocument { (document, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let document = document, document.exists, let data = document.data() {
+                completion(.success(data))
+            } else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "User document not found"])))
             }
         }
+    }
 }

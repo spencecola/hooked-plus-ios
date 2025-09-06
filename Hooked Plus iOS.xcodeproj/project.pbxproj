@@ -11,6 +11,7 @@
 		80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E492E6BA1520019A461 /* FirebaseFirestore */; };
 		80EC4E5B2E6C90350019A461 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E5A2E6C90350019A461 /* FirebaseAuth */; };
 		80EC4E6C2E6CC9680019A461 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E6B2E6CC9680019A461 /* Alamofire */; };
+		80EC4E742E6CF0130019A461 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E732E6CF0130019A461 /* GoogleSignIn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,22 +37,9 @@
 		80EC4E212E6B9A730019A461 /* Hooked Plus iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hooked Plus iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		80EC4E6E2E6CCB650019A461 /* Exceptions for "Hooked Plus iOS" folder in "Hooked Plus iOS" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"Hooked-Plus-iOS-Info.plist",
-			);
-			target = 80EC4E092E6B9A6E0019A461 /* Hooked Plus iOS */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		80EC4E0C2E6B9A6E0019A461 /* Hooked Plus iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				80EC4E6E2E6CCB650019A461 /* Exceptions for "Hooked Plus iOS" folder in "Hooked Plus iOS" target */,
-			);
 			path = "Hooked Plus iOS";
 			sourceTree = "<group>";
 		};
@@ -72,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				80EC4E742E6CF0130019A461 /* GoogleSignIn in Frameworks */,
 				80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */,
 				80EC4E6C2E6CC9680019A461 /* Alamofire in Frameworks */,
 				80EC4E5B2E6C90350019A461 /* FirebaseAuth in Frameworks */,
@@ -148,6 +137,7 @@
 				80EC4E492E6BA1520019A461 /* FirebaseFirestore */,
 				80EC4E5A2E6C90350019A461 /* FirebaseAuth */,
 				80EC4E6B2E6CC9680019A461 /* Alamofire */,
+				80EC4E732E6CF0130019A461 /* GoogleSignIn */,
 			);
 			productName = "Hooked Plus iOS";
 			productReference = 80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */;
@@ -235,6 +225,7 @@
 				80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				80EC4E352E6B9D480019A461 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				80EC4E362E6B9D990019A461 /* XCRemoteSwiftPackageReference "Swinject" */,
+				80EC4E722E6CEEBA0019A461 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 80EC4E0B2E6B9A6E0019A461 /* Products */;
@@ -629,6 +620,14 @@
 				minimumVersion = 2.10.0;
 			};
 		};
+		80EC4E722E6CEEBA0019A461 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -651,6 +650,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80EC4E352E6B9D480019A461 /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		80EC4E732E6CF0130019A461 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80EC4E722E6CEEBA0019A461 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
