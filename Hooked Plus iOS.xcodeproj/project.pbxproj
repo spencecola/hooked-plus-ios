@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E472E6BA14B0019A461 /* FirebaseCore */; };
 		80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E492E6BA1520019A461 /* FirebaseFirestore */; };
+		80EC4E5B2E6C90350019A461 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E5A2E6C90350019A461 /* FirebaseAuth */; };
+		80EC4E6C2E6CC9680019A461 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E6B2E6CC9680019A461 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +36,22 @@
 		80EC4E212E6B9A730019A461 /* Hooked Plus iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Hooked Plus iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		80EC4E6E2E6CCB650019A461 /* Exceptions for "Hooked Plus iOS" folder in "Hooked Plus iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Hooked-Plus-iOS-Info.plist",
+			);
+			target = 80EC4E092E6B9A6E0019A461 /* Hooked Plus iOS */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		80EC4E0C2E6B9A6E0019A461 /* Hooked Plus iOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				80EC4E6E2E6CCB650019A461 /* Exceptions for "Hooked Plus iOS" folder in "Hooked Plus iOS" target */,
+			);
 			path = "Hooked Plus iOS";
 			sourceTree = "<group>";
 		};
@@ -58,6 +73,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */,
+				80EC4E6C2E6CC9680019A461 /* Alamofire in Frameworks */,
+				80EC4E5B2E6C90350019A461 /* FirebaseAuth in Frameworks */,
 				80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -129,6 +146,8 @@
 			packageProductDependencies = (
 				80EC4E472E6BA14B0019A461 /* FirebaseCore */,
 				80EC4E492E6BA1520019A461 /* FirebaseFirestore */,
+				80EC4E5A2E6C90350019A461 /* FirebaseAuth */,
+				80EC4E6B2E6CC9680019A461 /* Alamofire */,
 			);
 			productName = "Hooked Plus iOS";
 			productReference = 80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */;
@@ -422,6 +441,8 @@
 				DEVELOPMENT_TEAM = 6F8849TX88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Hooked-Plus-iOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow access to local server for debugging.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -450,6 +471,8 @@
 				DEVELOPMENT_TEAM = 6F8849TX88;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Hooked-Plus-iOS-Info.plist";
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow access to local server for debugging.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -618,6 +641,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		80EC4E5A2E6C90350019A461 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		80EC4E6B2E6CC9680019A461 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80EC4E352E6B9D480019A461 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

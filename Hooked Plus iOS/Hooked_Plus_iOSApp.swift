@@ -8,19 +8,17 @@
 import SwiftUI
 import FirebaseCore
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
-    return true
-  }
-}
-
 @main
 struct Hooked_Plus_iOSApp: App {
+    
+    init() {
+        FirebaseApp.configure()
+        print("Firebase configured: \(FirebaseApp.app() != nil)") // Debug to confirm initialization
+    }
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            Router()
         }
     }
 }

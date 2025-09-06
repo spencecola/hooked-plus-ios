@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "ABD20ED9-966B-46B7-8D37-E78F161161DB"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "205F6DCF-DC69-4BF4-B341-B9E589D6D166"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Data/Authentication/AuthManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "signUp(email:password:firstName:lastName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "205F6DCF-DC69-4BF4-B341-B9E589D6D166 - 24578aa5f20bd420"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(6) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37">
+               </Location>
+               <Location
+                  uuid = "205F6DCF-DC69-4BF4-B341-B9E589D6D166 - c7c095a3bf1f7a21"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37">
+               </Location>
+               <Location
+                  uuid = "205F6DCF-DC69-4BF4-B341-B9E589D6D166 - 33e47ded5c5be23"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37">
+               </Location>
+               <Location
+                  uuid = "205F6DCF-DC69-4BF4-B341-B9E589D6D166 - 44dd8e51d62fb168"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(10) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "37"
+                  endingLineNumber = "37">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C47F2F57-BE54-4902-B3A9-EAADF7C05E45"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Data/Authentication/AuthManger+Firestore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "createUserDocument(user:firstName:lastName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "C47F2F57-BE54-4902-B3A9-EAADF7C05E45 - f9f079979e5b9b6c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Hooked_Plus_iOS.AuthManager.createUserDocument(user: FirebaseAuth.User, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManger+Firestore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13">
+               </Location>
+               <Location
+                  uuid = "C47F2F57-BE54-4902-B3A9-EAADF7C05E45 - ef4c4b7ea410676e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Hooked_Plus_iOS.AuthManager.createUserDocument(user: FirebaseAuth.User, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManger+Firestore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13">
+               </Location>
+               <Location
+                  uuid = "C47F2F57-BE54-4902-B3A9-EAADF7C05E45 - e81aadad410d816f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Hooked_Plus_iOS.AuthManager.createUserDocument(user: FirebaseAuth.User, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManger+Firestore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "13"
+                  endingLineNumber = "13">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7E007B7F-5550-4A4B-B285-9E9C4910F172"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Data/Authentication/AuthManger+Firestore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "createUserDocument(user:firstName:lastName:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8D601533-2399-4CF9-8524-CB8BC52F98CE"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Data/Authentication/AuthManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "signUp(email:password:firstName:lastName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "8D601533-2399-4CF9-8524-CB8BC52F98CE - 398f31a89351f542"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30">
+               </Location>
+               <Location
+                  uuid = "8D601533-2399-4CF9-8524-CB8BC52F98CE - c7c095a3bf1f7d46"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "30"
+                  endingLineNumber = "30">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EA611BBB-10C4-4CF3-8171-E94AB0B4CA52"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Data/Authentication/AuthManger+Firestore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "createUserDocument(user:firstName:lastName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EA611BBB-10C4-4CF3-8171-E94AB0B4CA52 - f9f079979e5b9cd0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for Hooked_Plus_iOS.AuthManager.createUserDocument(user: FirebaseAuth.User, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManger+Firestore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17">
+               </Location>
+               <Location
+                  uuid = "EA611BBB-10C4-4CF3-8171-E94AB0B4CA52 - e81aadad410d86d3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(4) suspend resume partial function for Hooked_Plus_iOS.AuthManager.createUserDocument(user: FirebaseAuth.User, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManger+Firestore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "17"
+                  endingLineNumber = "17">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0809860A-50E2-4383-8C60-253AEF03DCE9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Data/Authentication/AuthManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "signUp(email:password:firstName:lastName:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0809860A-50E2-4383-8C60-253AEF03DCE9 - c7c095a3bf1f7dc2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(7) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34">
+               </Location>
+               <Location
+                  uuid = "0809860A-50E2-4383-8C60-253AEF03DCE9 - 33e47ded5c5b9c0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(9) suspend resume partial function for Hooked_Plus_iOS.AuthManager.signUp(email: Swift.String, password: Swift.String, firstName: Swift.String, lastName: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Data/Authentication/AuthManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "34"
+                  endingLineNumber = "34">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
