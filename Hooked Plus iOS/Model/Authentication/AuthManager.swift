@@ -5,6 +5,7 @@
 //  Created by Spencer Newell on 9/5/25.
 //
 
+import Combine
 import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
@@ -15,9 +16,21 @@ enum AuthState {
     case unauthenticated
 }
 
-class AuthManager: ObservableObject {
+protocol AuthManagable {
+    var state: AuthState { get }
+    var statePublisher: AnyPublisher<AuthState, Never> { get }
+    func signInWithGoogle() async throws
+    func signUp(email: String, password: String, firstName: String, lastName: String) async throws
+    func signIn(email: String, password: String) async throws
+    func signOut()
+}
+
+class AuthManager: AuthManagable, ObservableObject {
     @Published var state: AuthState = .uninitialized
     private var authStateHandle: AuthStateDidChangeListenerHandle?
+    var statePublisher: AnyPublisher<AuthState, Never> {
+         $state.eraseToAnyPublisher()
+     }
 
     init() {
         authStateHandle = Auth.auth().addStateDidChangeListener { [weak self] _, user in

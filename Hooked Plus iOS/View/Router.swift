@@ -22,6 +22,7 @@ struct Router: View {
                 EmptyView()
             }
         }.loading(isLoading: authManager.isLoading())
+            .background(ColorToken.lightGray.color)
     }
 }
 

@@ -8,16 +8,12 @@
 import SwiftUI
 import FirebaseCore
 import GoogleSignIn
+import Swinject
 
 @main
 struct Hooked_Plus_iOSApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
-    init() {
-        FirebaseApp.configure()
-        print("Firebase configured: \(FirebaseApp.app() != nil)") // Debug to confirm initialization
-    }
     
     var body: some Scene {
         WindowGroup {
@@ -27,7 +23,18 @@ struct Hooked_Plus_iOSApp: App {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    static let container = Container()
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
     }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+            FirebaseApp.configure()
+            // setup swinject dependencies
+            let assembly = HookedAssembly()
+            assembly.assemble(container: AppDelegate.container)
+
+            return true
+        }
 }

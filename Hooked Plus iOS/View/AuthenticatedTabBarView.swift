@@ -17,65 +17,90 @@ struct AuthenticatedTabBarView: View {
                 .tabItem {
                     Label("Home", systemImage: "house")
                 }
-            
-            ProfileView()
+            // TODO: use swinject
+            ProfileView(viewModel: HookedAssembly.resolver.resolve(ProfileViewModel.self)!)
                 .tabItem {
                     Label("Profile", systemImage: "person")
                 }
-        }
+        }.background(ColorToken.backgroundPrimary.color)
     }
 }
 
 struct HomeView: View {
+    // Enum for picker segments
+    private enum HomeTab: String, CaseIterable, Identifiable {
+        case feed = "Feed"
+        case lakeReport = "Lake Report"
+        case live = "Live"
+        
+        var id: String { rawValue }
+    }
+    
+    @State private var selectedTab: HomeTab = .feed
+    
     var body: some View {
         VStack {
-            Text("Welcome to the Home Screen!")
-                .font(.title)
+            Picker("Select View", selection: $selectedTab) {
+                ForEach(HomeTab.allCases) { tab in
+                    Text(tab.rawValue).tag(tab)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding()
+            
+            switch selectedTab {
+            case .feed:
+                FeedView()
+            case .lakeReport:
+                LakeReportView()
+            case .live:
+                LiveView()
+            }
+            
             Spacer()
         }
         .padding()
+        .background(ColorToken.backgroundPrimary.color)
     }
 }
 
-struct ProfileView: View {
-    @EnvironmentObject private var authManager: AuthManager
-    @State private var userData: [String: Any]?
-    @State private var errorMessage = ""
-
+// Placeholder views for each segment
+struct FeedView: View {
     var body: some View {
         VStack {
-            if case .authenticated(let user) = authManager.state {
-                Text("Profile")
-                    .font(.title)
-                Text("Email: \(user.email ?? "No email")")
-                if let data = userData {
-                    Text("Name: \(data["name"] as? String ?? "No name")")
-                    Text("Joined: \(data["createdAt"] as? Timestamp ?? Timestamp()).dateValue(), format: .dateTime)")
-                } else if !errorMessage.isEmpty {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                }
-                Button("Fetch User Data") {
-                    authManager.fetchUserData { result in
-                        switch result {
-                        case .success(let data):
-                            userData = data
-                            errorMessage = ""
-                        case .failure(let error):
-                            errorMessage = error.localizedDescription
-                        }
-                    }
-                }
-                .padding()
-                Button("Sign Out") {
-                    authManager.signOut()
-                }
-                .padding()
-            } else {
-                Text("Loading profile...")
-            }
+            Text("Feed Content")
+                .font(.title2)
+            Text("This is where the social feed will appear.")
+                .foregroundColor(.secondary)
         }
-        .padding()
+    }
+}
+
+struct LakeReportView: View {
+    var body: some View {
+        VStack {
+            Text("Lake Report")
+                .font(.title2)
+            Text("This is where lake reports will be displayed.")
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+struct LiveView: View {
+    var body: some View {
+        VStack {
+            Text("Live Updates")
+                .font(.title2)
+            Text("This is where live updates will be shown.")
+                .foregroundColor(.secondary)
+        }
+    }
+}
+
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView()
     }
 }
 
