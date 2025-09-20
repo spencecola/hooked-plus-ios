@@ -1,20 +1,22 @@
-//
-//  CreatePostView.swift
-//  Hooked Plus iOS
-//
-//  Created by Spencer Newell on 9/14/25.
-//
-
 import SwiftUI
 import PhotosUI
 
+import Combine
+import Alamofire
+
 struct CreatePostView: View {
     @State private var description: String = ""
-    @State private var selectedItem: PhotosPickerItem?
-    @State private var selectedImage: UIImage?
+    @State private var selectedItems: [PhotosPickerItem] = []
+    @State private var selectedImages: [UIImage] = []
     @State private var showingCamera = false
-    @StateObject private var locationManager = LocationManager()
+    @StateObject private var viewModel: FeedViewModel
     @Environment(\.dismiss) private var dismiss
+    
+    private let maxImages = 5
+    
+    init(viewModel: FeedViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         NavigationStack {
@@ -26,19 +28,32 @@ struct CreatePostView: View {
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
                     
-                    if let image = selectedImage {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(maxHeight: 300)
-                            .cornerRadius(8)
+                    if !selectedImages.isEmpty {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack {
+                                ForEach(selectedImages, id: \.self) { image in
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 150, height: 150)
+                                        .cornerRadius(8)
+                                }
+                            }
+                        }
                     }
                     
-                    PhotosPicker("Select from Gallery", selection: $selectedItem, matching: .images)
+                    PhotosPicker(
+                        selectedImages.count < maxImages ? "Select from Gallery (\(maxImages - selectedImages.count) remaining)" : "Max images selected",
+                        selection: $selectedItems,
+                        maxSelectionCount: maxImages,
+                        matching: .images
+                    )
+                    .disabled(selectedImages.count >= maxImages)
                     
                     Button("Take Photo") {
                         showingCamera = true
                     }
+                    .disabled(selectedImages.count >= maxImages)
                 }
                 .padding()
             }
@@ -51,39 +66,43 @@ struct CreatePostView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Post") {
-                        // Placeholder for posting logic
-                        print("Posting: \(description)")
-                        if let location = locationManager.location {
-                            print("Latitude: \(location.coordinate.latitude), Longitude: \(location.coordinate.longitude)")
-                        }
-                        if selectedImage != nil {
-                            print("Image attached")
-                        }
+                        viewModel.createPost(description: description, photos: selectedItems)
                         dismiss()
                     }
-                    .disabled(description.isEmpty)
+                    .disabled(description.isEmpty || isUploading)
                 }
             }
-            .onAppear {
-                locationManager.requestPermission()
-            }
-            .onChange(of: selectedItem) { newItem in
+            .onChange(of: selectedItems) { newItems in
                 Task {
-                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                        selectedImage = UIImage(data: data)
+                    selectedImages.removeAll()
+                    for item in newItems {
+                        if let data = try? await item.loadTransferable(type: Data.self),
+                           let image = UIImage(data: data) {
+                            selectedImages.append(image)
+                        }
                     }
                 }
             }
             .sheet(isPresented: $showingCamera) {
-                ImagePicker(sourceType: .camera, selectedImage: $selectedImage)
-                    .ignoresSafeArea()
+                ImagePicker(sourceType: .camera, selectedImage: Binding(
+                    get: { selectedImages.last },
+                    set: { newImage in
+                        if let newImage = newImage, selectedImages.count < maxImages {
+                            selectedImages.append(newImage)
+                        }
+                    }
+                ))
+                .ignoresSafeArea()
             }
-        }
+        }.loading(isLoading: viewModel.state.loading)
     }
+    
+    @State private var isUploading = false
+    
 }
 
-struct CreatePostView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreatePostView()
-    }
-}
+//struct CreatePostView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreatePostView()
+//    }
+//}

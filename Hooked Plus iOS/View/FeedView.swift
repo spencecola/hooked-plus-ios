@@ -7,16 +7,27 @@
 
 import SwiftUI
 
-// Placeholder views for each segment
 struct FeedView: View {
     @State var createPost = false
+    @StateObject private var viewModel: FeedViewModel
+    
+    init(viewModel: FeedViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
     var body: some View {
         ZStack {
-            VStack {
-                Text("Feed Content")
-                    .font(.title2)
-                Text("This is where the social feed will appear.")
-                    .foregroundColor(.secondary)
+            ScrollView {
+                VStack(spacing: 8) {
+                    ForEach(viewModel.state.feed.data) { item in
+                        CardView(
+                            imageUrls: item.images,
+                            description: item.content?.description,
+                            posterName: ""
+                        )
+                    }
+                }
+                .padding(.vertical)
             }
             
             // Floating Action Button
@@ -39,14 +50,22 @@ struct FeedView: View {
                     .padding(.bottom, 16)
                 }
             }
-        }.sheet(isPresented: $createPost) {
-            CreatePostView()
+        }
+        .sheet(isPresented: $createPost) {
+            CreatePostView(viewModel: viewModel)
+        }
+        .loading(isLoading: viewModel.state.loading)
+        .onAppear {
+            viewModel.refreshFeed()
         }
     }
 }
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        FeedView(viewModel: FeedViewModel(locationManager: LocationManager()))
+            .previewLayout(.sizeThatFits)
+            .padding()
+            .background(Color(.systemGroupedBackground))
     }
 }

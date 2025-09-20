@@ -18,11 +18,12 @@ struct Router: View {
             } else if case .authenticated(_) = authManager.state {
                 AuthenticatedTabBarView()
                     .environmentObject(authManager)
+                    .background(ColorToken.backgroundPrimary.color)
             } else {
                 EmptyView()
             }
         }.loading(isLoading: authManager.isLoading())
-            .background(ColorToken.lightGray.color)
+            .background(ColorToken.backgroundPrimary.color)
     }
 }
 

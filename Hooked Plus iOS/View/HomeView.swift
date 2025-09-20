@@ -31,7 +31,7 @@ struct HomeView: View {
             
             switch selectedTab {
             case .feed:
-                FeedView()
+                FeedView(viewModel: FeedViewModel(locationManager: LocationManager()))
             case .lakeReport:
                 LakeReportView()
             case .live:

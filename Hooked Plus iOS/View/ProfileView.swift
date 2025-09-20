@@ -12,10 +12,6 @@ struct ProfileView: View {
 
     var body: some View {
         VStack {
-            Text("Profile")
-                .font(.title)
-                .foregroundColor(ColorToken.backgroundPrimary.color)
-            
             if let userData = viewModel.state.data {
                 VStack(spacing: 10) {
                     Text("Email: \(userData.email)")
@@ -47,8 +43,8 @@ struct ProfileView: View {
                 lastNameInput = userData.lastName
             }
         }
+        .navigationTitle("Profile")
         .loading(isLoading: viewModel.state.isLoading())
-        .background(ColorToken.backgroundPrimary.color)
 //        .onChange(of: viewModel.state) { newState in
 //            if case .success(let userData) = newState {
 //                firstNameInput = userData.firstName ?? ""
