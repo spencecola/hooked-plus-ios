@@ -1,10 +1,3 @@
-//
-//  FeedView.swift
-//  Hooked Plus iOS
-//
-//  Created by Spencer Newell on 9/13/25.
-//
-
 import SwiftUI
 
 struct FeedView: View {
@@ -17,17 +10,17 @@ struct FeedView: View {
     
     var body: some View {
         ZStack {
-            ScrollView {
-                VStack(spacing: 8) {
-                    ForEach(viewModel.state.feed.data) { item in
-                        CardView(
-                            imageUrls: item.images,
-                            description: item.content?.description,
-                            posterName: ""
-                        )
-                    }
+            List {
+                ForEach(viewModel.state.feed.data) { item in
+                    PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [])
+                        .listRowBackground(Color(ColorToken.backgroundPrimary.color))
+                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)) // Add 8pt spacing above and below each row
                 }
-                .padding(.vertical)
+            }
+            .listStyle(.plain) // Use plain style for minimal padding and full width
+            .frame(maxWidth: .infinity) // Ensure List takes full width
+            .refreshable {
+                viewModel.refreshFeed()
             }
             
             // Floating Action Button

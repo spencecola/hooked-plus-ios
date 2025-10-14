@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
+    var backgroundColor: Color = ColorToken.buttonPrimary.color
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
-            .frame(maxWidth: .infinity)
             .foregroundColor(.white)
-            .background(
-                LinearGradient(
-                    gradient: Gradient(colors: [Color.blue, Color.purple]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .background(backgroundColor) // Solid dark gray background
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0) // Slight shrink on press
             .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
@@ -28,14 +22,14 @@ struct PrimaryButtonStyle: ButtonStyle {
 }
 
 struct OutlineButtonStyle: ButtonStyle {
-    var color: Color = ColorToken.buttonSecondary.color
+    var backgroundColor: Color = ColorToken.buttonSecondary.color
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
-            .foregroundColor(color)
+            .foregroundColor(backgroundColor)
             .background(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(color, lineWidth: 2)
+                    .stroke(backgroundColor, lineWidth: 2)
             )
             .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
             .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)

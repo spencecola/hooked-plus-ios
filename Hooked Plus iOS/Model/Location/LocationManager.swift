@@ -7,36 +7,37 @@
 
 import CoreLocation
 
+// Location Manager to handle permissions and updates
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    private let manager = CLLocationManager()
-    @Published var location: CLLocation?
+    private let locationManager = CLLocationManager()
+    @Published var currentLocation: CLLocation?
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     
     override init() {
         super.init()
-        manager.delegate = self
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
-    func requestPermission() {
-        manager.requestWhenInUseAuthorization()
-    }
-    
-    func requestLocation() {
-        manager.requestLocation()
+    func requestLocationPermission() {
+        locationManager.requestWhenInUseAuthorization()
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         authorizationStatus = manager.authorizationStatus
-        if authorizationStatus == .authorizedWhenInUse {
-            manager.requestLocation()
+        if authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways {
+            locationManager.startUpdatingLocation()
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        location = locations.first
+        if let location = locations.last {
+            currentLocation = location
+            locationManager.stopUpdatingLocation() // Stop updates after getting location
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location error: \(error)")
+        print("Failed to get location: \(error.localizedDescription)")
     }
 }

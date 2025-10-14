@@ -13,6 +13,12 @@ struct FeedItemContentData: Codable {
 
 struct FeedItemData: Codable, Identifiable {
     var id: String
+    var timestamp: Date?
+    var firstName: String?
+    var lastName: String?
+    var profileIcon: String?
+    var likeCount: Int?
+    var commentCount: Int?
     var content: FeedItemContentData?
     var images: [String]?
 }

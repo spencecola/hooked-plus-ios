@@ -1,18 +1,11 @@
-//
-//  ProfileViewModel.swift
-//  Hooked Plus iOS
-//
-//  Created by Spencer Newell on 9/12/25.
-//
-
 import Combine
+import _PhotosUI_SwiftUI
 
 class ProfileViewModel: ObservableObject {
     
     @Published var state: DataResult<UserData> = .uninitialized
     
     private var repository: any Repository<UserData>
-    
     private var authManager: AuthManagable
     
     init(repository: any Repository<UserData>, authManager: AuthManagable) {
@@ -41,6 +34,19 @@ class ProfileViewModel: ObservableObject {
         
         userData.lastName = lastName
         repository.put(data: userData)
+    }
+    
+    func setProfileIcon(selectedItem: PhotosPickerItem) async {
+        do {
+            let profileIcon = try await UserService.uploadProfileIcon(selectedItem: selectedItem)
+            guard var userData = state.data else {
+                return
+            }
+            userData.profileIcon = profileIcon
+//            repository.put(data: userData)
+        } catch {
+            print("Failed to upload profile icon: \(error)")
+        }
     }
     
     func signout() {

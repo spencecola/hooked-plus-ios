@@ -81,7 +81,7 @@ enum FeedService {
                 }
                 
                 // Add location if available
-                if let location = locationManager.location {
+                if let location = locationManager.currentLocation {
                     if let latData = "\(location.coordinate.latitude)".data(using: .utf8) {
                         multipartFormData.append(latData, withName: "location[lat]")
                     }
@@ -133,9 +133,13 @@ enum FeedService {
             .contentType("application/json")
         ]
         
+        // Create a custom JSONDecoder with date decoding strategy
+         let decoder = JSONDecoder()
+         decoder.dateDecodingStrategy = .millisecondsSince1970
+        
         // Make the GET request using Alamofire
         let response = await AF.request(url, method: .get, headers: headers)
-            .serializingDecodable(FeedResponse.self)
+            .serializingDecodable(FeedResponse.self, decoder: decoder)
             .response
         
         // Handle the response

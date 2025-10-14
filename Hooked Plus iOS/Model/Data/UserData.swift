@@ -9,11 +9,13 @@ struct UserData {
     var firstName: String
     var lastName: String
     var email: String
+    var profileIcon: String?
     
     init(dictionary: [String : Any]) {
         firstName = dictionary["firstName"] as? String ?? ""
         lastName = dictionary["lastName"] as? String ?? ""
         email = dictionary["email"] as? String ?? ""
+        profileIcon = dictionary["profileIcon"] as? String
     }
 }
 
@@ -23,7 +25,8 @@ extension UserData {
         [
             "firstName" : firstName,
             "lastName" : lastName,
-            "email" : email
+            "email" : email,
+            "profileIcon" : profileIcon
         ]
     }
 }

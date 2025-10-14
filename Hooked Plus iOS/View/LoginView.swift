@@ -252,6 +252,7 @@ struct SignInView: View {
                     }
                 }
             }
+            .frame(maxWidth: .infinity)
             .buttonStyle(PrimaryButtonStyle())
 
             Button("Sign Up") {
