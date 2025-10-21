@@ -4,7 +4,6 @@ import SwiftUI
 
 struct ImageCardView: View {
     // A fixed height for the complex layout, making it behave like a card.
-    // Adjust this value to change the overall height of the image gallery.
     private let containerHeight: CGFloat = 300
     private let spacing: CGFloat = 6
     
@@ -22,11 +21,11 @@ struct ImageCardView: View {
             } else {
                 // Dynamic layout based on image count
                 layoutForImageCount()
+                    // Apply the fixed height to the entire layout container
                     .frame(height: containerHeight)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
             }
         }
-        .padding(8)
         .fullScreenCover(item: Binding(
             get: { selectedImage.map { IdentifiableImage(url: $0) } },
             set: { _ in selectedImage = nil }
@@ -45,13 +44,19 @@ struct ImageCardView: View {
         case 1:
             // Rule 1: Full height and width
             ImageView(url: images[0], onTap: { selectedImage = images[0] })
+                // This is the only case where the ImageView is directly constrained
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .layoutPriority(1) // Added layout priority for consistency
             
         case 2:
             // Rule 2: Split width and fill height
             HStack(spacing: spacing) {
+                // By default, children of HStack/VStack with .frame(max: .infinity) will be distributed
+                // The .layoutPriority(1) ensures they get equal space priority
                 ImageView(url: images[0], onTap: { selectedImage = images[0] })
+                    .layoutPriority(1)
                 ImageView(url: images[1], onTap: { selectedImage = images[1] })
+                    .layoutPriority(1)
             }
             
         case 3:
@@ -59,25 +64,32 @@ struct ImageCardView: View {
             HStack(spacing: spacing) {
                 // Image 1 (50% width, 100% height)
                 ImageView(url: images[0], onTap: { selectedImage = images[0] })
+                    .layoutPriority(1) // Takes up one-half of the width
                 
                 // Images 2 & 3 (50% width, split 50% height each)
                 VStack(spacing: spacing) {
                     ImageView(url: images[1], onTap: { selectedImage = images[1] })
+                        .layoutPriority(1)
                     ImageView(url: images[2], onTap: { selectedImage = images[2] })
+                        .layoutPriority(1)
                 }
+                .layoutPriority(1) // Ensures this VStack also takes up one-half of the width
             }
             
         case 4:
             // Rule 4: 2x2 grid (1/2 width, 1/2 height each)
             VStack(spacing: spacing) {
                 HStack(spacing: spacing) {
-                    ImageView(url: images[0], onTap: { selectedImage = images[0] })
-                    ImageView(url: images[1], onTap: { selectedImage = images[1] })
+                    ImageView(url: images[0], onTap: { selectedImage = images[0] }).layoutPriority(1)
+                    ImageView(url: images[1], onTap: { selectedImage = images[1] }).layoutPriority(1)
                 }
+                .layoutPriority(1) // Ensures this HStack takes up one-half of the height
+                
                 HStack(spacing: spacing) {
-                    ImageView(url: images[2], onTap: { selectedImage = images[2] })
-                    ImageView(url: images[3], onTap: { selectedImage = images[3] })
+                    ImageView(url: images[2], onTap: { selectedImage = images[2] }).layoutPriority(1)
+                    ImageView(url: images[3], onTap: { selectedImage = images[3] }).layoutPriority(1)
                 }
+                .layoutPriority(1) // Ensures this HStack takes up one-half of the height
             }
             
         case 5:
@@ -85,38 +97,41 @@ struct ImageCardView: View {
             HStack(spacing: spacing) {
                 // Images 1 & 2 (50% width, split 50% height each)
                 VStack(spacing: spacing) {
-                    ImageView(url: images[0], onTap: { selectedImage = images[0] })
-                    ImageView(url: images[1], onTap: { selectedImage = images[1] })
+                    ImageView(url: images[0], onTap: { selectedImage = images[0] }).layoutPriority(1)
+                    ImageView(url: images[1], onTap: { selectedImage = images[1] }).layoutPriority(1)
                 }
+                .layoutPriority(1) // Ensures this VStack takes up one-half of the width
                 
                 // Images 3, 4, & 5 (50% width, split 1/3 height each)
                 VStack(spacing: spacing) {
-                    ImageView(url: images[2], onTap: { selectedImage = images[2] })
-                    ImageView(url: images[3], onTap: { selectedImage = images[3] })
-                    ImageView(url: images[4], onTap: { selectedImage = images[4] })
+                    ImageView(url: images[2], onTap: { selectedImage = images[2] }).layoutPriority(1)
+                    ImageView(url: images[3], onTap: { selectedImage = images[3] }).layoutPriority(1)
+                    ImageView(url: images[4], onTap: { selectedImage = images[4] }).layoutPriority(1)
                 }
+                .layoutPriority(1) // Ensures this VStack takes up one-half of the width
             }
             
         default:
             // Handle 6+ images by displaying the first 5 in the Rule 5 layout
-            // and adding a "+N" overlay to the last image.
             let firstFive = Array(images.prefix(5))
             let moreCount = count - 5
             
             HStack(spacing: spacing) {
                 // Images 1 & 2 (50% width, split 50% height each)
                 VStack(spacing: spacing) {
-                    ImageView(url: firstFive[0], onTap: { selectedImage = firstFive[0] })
-                    ImageView(url: firstFive[1], onTap: { selectedImage = firstFive[1] })
+                    ImageView(url: firstFive[0], onTap: { selectedImage = firstFive[0] }).layoutPriority(1)
+                    ImageView(url: firstFive[1], onTap: { selectedImage = firstFive[1] }).layoutPriority(1)
                 }
+                .layoutPriority(1)
                 
                 // Images 3, 4, & 5+ (50% width, split 1/3 height each)
                 VStack(spacing: spacing) {
-                    ImageView(url: firstFive[2], onTap: { selectedImage = firstFive[2] })
-                    ImageView(url: firstFive[3], onTap: { selectedImage = firstFive[3] })
+                    ImageView(url: firstFive[2], onTap: { selectedImage = firstFive[2] }).layoutPriority(1)
+                    ImageView(url: firstFive[3], onTap: { selectedImage = firstFive[3] }).layoutPriority(1)
                     
                     // Image 5 with "+N" overlay
                     ImageView(url: firstFive[4], onTap: { selectedImage = firstFive[4] })
+                        .layoutPriority(1)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12).fill(Color.black.opacity(0.4))
                                 .overlay(
@@ -127,6 +142,7 @@ struct ImageCardView: View {
                                 )
                         )
                 }
+                .layoutPriority(1)
             }
         }
     }
@@ -155,6 +171,8 @@ private struct ImageView: View {
                 ProgressView()
             }
         }
+        // This frame and layoutPriority are critical for the equal distribution
+        // inside the HStacks and VStacks in the parent view.
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 12))

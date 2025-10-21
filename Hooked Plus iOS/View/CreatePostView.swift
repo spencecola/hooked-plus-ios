@@ -9,10 +9,11 @@ struct CreatePostView: View {
     @State private var description: String = ""
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var selectedImages: [UIImage] = []
+    @State private var showingSpeciesSearch = true
+    @State private var selectedSpecies: SpeciesData?
     @State private var showingCamera = false
     @State private var isUploading = false
     @StateObject private var viewModel: FeedViewModel
-    @StateObject private var locationManager = LocationManager()
     @Environment(\.dismiss) private var dismiss
     
     private let maxImages = 5
@@ -27,14 +28,15 @@ struct CreatePostView: View {
                 description: $description,
                 selectedItems: $selectedItems,
                 selectedImages: $selectedImages,
+                showingSpeciesSearch: $showingSpeciesSearch,
+                selectedSpecies: $selectedSpecies,
                 showingCamera: $showingCamera,
                 isUploading: $isUploading,
                 maxImages: maxImages,
                 viewModel: viewModel,
-                locationManager: locationManager,
                 onCancel: { dismiss() },
                 onPost: {
-                    let location = locationManager.currentLocation?.coordinate
+                    let location = viewModel.state.currentLocation?.coordinate
                     viewModel.createPost(
                         description: description,
                         photos: selectedItems,
@@ -45,9 +47,6 @@ struct CreatePostView: View {
                 }
             )
             .navigationTitle("Create Post")
-            .onAppear {
-                locationManager.requestLocationPermission()
-            }
         }
     }
 }
@@ -57,17 +56,30 @@ struct PostContentView: View {
     @Binding var description: String
     @Binding var selectedItems: [PhotosPickerItem]
     @Binding var selectedImages: [UIImage]
+    @Binding var showingSpeciesSearch: Bool
+    @Binding var selectedSpecies: SpeciesData?
     @Binding var showingCamera: Bool
     @Binding var isUploading: Bool
     let maxImages: Int
     let viewModel: FeedViewModel
-    let locationManager: LocationManager
     let onCancel: () -> Void
     let onPost: () -> Void
+    @State private var isCatch: Bool = false
     
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
+                // Is this a catch? question
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Is this a catch?")
+                        .font(.headline)
+                    Picker("Is this a catch?", selection: $isCatch) {
+                        Text("Yes").tag(true)
+                        Text("No").tag(false)
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
                 DescriptionInputView(description: $description)
                 ImagePreviewView(selectedImages: $selectedImages)
                 PhotosPickerView(
@@ -79,7 +91,13 @@ struct PostContentView: View {
                     showingCamera: $showingCamera,
                     isDisabled: selectedImages.count >= maxImages
                 )
-                LocationMapView(locationManager: locationManager)
+                
+                // Conditionally show views based on isCatch
+                if isCatch {
+                    WeatherView(weather: viewModel.state.currentWeather)
+                    LocationView(location: viewModel.state.currentLocation)
+                    SelectedSpeciesView(showSelectSpeciesView: $showingSpeciesSearch, selectedSpecies: $selectedSpecies)
+                }
             }
             .padding()
             .toolbar {
@@ -112,6 +130,12 @@ struct PostContentView: View {
                     }
                 ))
                 .ignoresSafeArea()
+            }
+            .sheet(isPresented: $showingSpeciesSearch) {
+                SpeciesSearchView(vm: SpeciesViewModel()) { species in
+                    selectedSpecies = species
+                    showingSpeciesSearch = false
+                }
             }
             .loading(isLoading: viewModel.state.loading)
         }
@@ -182,39 +206,94 @@ struct CameraButtonView: View {
     }
 }
 
-// Extracted location map view
-struct LocationMapView: View {
-    let locationManager: LocationManager
+struct WeatherView: View {
+    var weather: WeatherData?
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Your Location")
-                .font(.headline)
-            if locationManager.authorizationStatus == .authorizedWhenInUse || locationManager.authorizationStatus == .authorizedAlways {
-                if let coordinate = locationManager.currentLocation?.coordinate {
-                    Map(coordinateRegion: .constant(MKCoordinateRegion(
-                        center: coordinate,
-                        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                    )), annotationItems: [LocationPin(coordinate: coordinate)]) { pin in
-                        MapMarker(coordinate: pin.coordinate, tint: .red)
-                    }
-                    .frame(height: 200)
-                    .cornerRadius(8)
-                } else {
-                    Text("Fetching location...")
-                        .foregroundColor(.gray)
+        if let weather {
+            Text("\(weather.formattedTemperature) \(weather.formattedWind)")
+        }
+    }
+}
+
+// Extracted location map view
+struct LocationView: View {
+    @State private var placeName: String = "Fetching location..."
+    @State private var depth: String = ""
+    let location: CLLocation?
+    
+    var body: some View {
+        HStack {
+            if let coordinate = location?.coordinate {
+                Map(coordinateRegion: .constant(MKCoordinateRegion(
+                    center: coordinate,
+                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                )), annotationItems: [LocationPin(coordinate: coordinate)]) { pin in
+                    MapMarker(coordinate: pin.coordinate, tint: .red)
                 }
-            } else if locationManager.authorizationStatus == .denied || locationManager.authorizationStatus == .restricted {
-                Text("Location access denied. Please enable in Settings.")
-                    .foregroundColor(.red)
+                .frame(height: 100)
+                .cornerRadius(8)
             } else {
-                Button("Allow Location Access") {
-                    locationManager.requestLocationPermission()
-                }
+                Text("Fetching location...")
+                    .foregroundColor(.gray)
+            }
+            
+            VStack(alignment: .leading) {
+                Text(placeName)
+                    .lineLimit(2)
+                    .onAppear {
+                        if let coordinate = location?.coordinate {
+                            fetchPlaceName(for: coordinate)
+                        }
+                    }
+                TextField("Depth", text: $depth)
+                    .keyboardType(.numberPad)
+                    .textContentType(.none)
+            }
+        }
+    }
+    
+    private func fetchPlaceName(for coordinate: CLLocationCoordinate2D) {
+        let geocoder = CLGeocoder()
+        let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        
+        geocoder.reverseGeocodeLocation(location) { placemarks, error in
+            if let error = error {
+                print("Geocoding error: \(error.localizedDescription)")
+                placeName = "Unknown location"
+                return
+            }
+            
+            if let placemark = placemarks?.first {
+                let name = placemark.name ?? placemark.locality ?? placemark.administrativeArea ?? "Unknown location"
+                placeName = name
+            } else {
+                placeName = "Unknown location"
             }
         }
     }
 }
+
+struct SelectedSpeciesView: View {
+    @Binding var showSelectSpeciesView: Bool
+    @Binding var selectedSpecies: SpeciesData?
+    
+    var body: some View {
+        HStack {
+            Text(selectedSpecies?.englishName ?? "No species selected")
+                .font(.body)
+                .foregroundColor(selectedSpecies != nil ? .primary : .gray)
+            Spacer()
+        }
+        .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(8)
+        .onTapGesture {
+            showSelectSpeciesView = true
+        }
+    }
+}
+
 
 // Extend FeedViewModel to handle location in createPost (assuming it exists)
 extension FeedViewModel {

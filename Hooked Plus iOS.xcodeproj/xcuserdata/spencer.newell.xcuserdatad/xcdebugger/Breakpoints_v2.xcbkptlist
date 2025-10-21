@@ -7,16 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "1D80D0D6-19D3-4CC5-95C8-BDDD1C8D79AE"
+            uuid = "AF87E039-9136-47D0-BE8D-C6F98F619487"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Hooked Plus iOS/View Model/CreatePostViewModel.swift"
+            filePath = "Hooked Plus iOS/Model/Services/SpeciesService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "refreshFeed()"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "getAllSpecies(query:page:limit:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E8ABF216-8568-4665-8FD0-66F0270F2C5D"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Hooked Plus iOS/Model/Services/SpeciesService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "getAllSpecies(query:page:limit:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
