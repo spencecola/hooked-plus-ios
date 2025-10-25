@@ -28,12 +28,12 @@ struct SpeciesSearchView: View {
                         .padding()
                 } else {
                     List {
-                        ForEach(viewModel.state.species, id: \.scientificName) { species in
+                        ForEach(viewModel.state.species, id: \.englishName) { species in
                             VStack(alignment: .leading) {
                                 Text(species.englishName)
                                     .font(.headline)
-                                if !species.scientificName.isEmpty {
-                                    Text(species.scientificName)
+                                if let scientificName = species.scientificName, !scientificName.isEmpty {
+                                    Text(scientificName)
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                 }

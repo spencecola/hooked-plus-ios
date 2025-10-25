@@ -51,30 +51,29 @@ struct ImageCardView: View {
         case 2:
             // Rule 2: Split width and fill height
             HStack(spacing: spacing) {
-                // By default, children of HStack/VStack with .frame(max: .infinity) will be distributed
-                // The .layoutPriority(1) ensures they get equal space priority
-                ImageView(url: images[0], onTap: { selectedImage = images[0] })
-                    .layoutPriority(1)
-                ImageView(url: images[1], onTap: { selectedImage = images[1] })
-                    .layoutPriority(1)
-            }
+                    // ImageView is now a stable box, filling 50% width due to .layoutPriority(1)
+                    ImageView(url: images[0], onTap: { selectedImage = images[0] })
+                        .layoutPriority(1)
+                    ImageView(url: images[1], onTap: { selectedImage = images[1] })
+                        .layoutPriority(1)
+                }
             
         case 3:
             // Rule 3: Image 1 is 1/2 width, full height. Images 2 & 3 are 1/2 width, split height.
             HStack(spacing: spacing) {
-                // Image 1 (50% width, 100% height)
-                ImageView(url: images[0], onTap: { selectedImage = images[0] })
-                    .layoutPriority(1) // Takes up one-half of the width
-                
-                // Images 2 & 3 (50% width, split 50% height each)
-                VStack(spacing: spacing) {
-                    ImageView(url: images[1], onTap: { selectedImage = images[1] })
-                        .layoutPriority(1)
-                    ImageView(url: images[2], onTap: { selectedImage = images[2] })
-                        .layoutPriority(1)
+                    // Image 1 (50% width, 100% height) - This is the primary problem child
+                    ImageView(url: images[0], onTap: { selectedImage = images[0] })
+                        .layoutPriority(1) // Takes up one-half of the width
+                      
+                    // Images 2 & 3 (50% width, split 50% height each)
+                    VStack(spacing: spacing) {
+                        ImageView(url: images[1], onTap: { selectedImage = images[1] })
+                            .layoutPriority(1)
+                        ImageView(url: images[2], onTap: { selectedImage = images[2] })
+                            .layoutPriority(1)
+                    }
+                    .layoutPriority(1) // Ensures this VStack also takes up one-half of the width
                 }
-                .layoutPriority(1) // Ensures this VStack also takes up one-half of the width
-            }
             
         case 4:
             // Rule 4: 2x2 grid (1/2 width, 1/2 height each)
@@ -156,27 +155,35 @@ private struct ImageView: View {
     let onTap: () -> Void
 
     var body: some View {
-        AsyncImage(url: URL(string: url)) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-            } else if phase.error != nil {
-                Color.gray.overlay(
-                    Image(systemName: "photo.fill")
-                        .font(.title)
-                        .foregroundColor(.white)
-                )
-            } else {
-                ProgressView()
+        GeometryReader { geo in
+            AsyncImage(url: URL(string: url)) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+
+                case .failure(_):
+                    Color.gray
+                        .overlay(
+                            Image(systemName: "photo.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
+                        )
+
+                case .empty:
+                    // Keeps same layout even before loading
+                    Color.gray
+                        .overlay(ProgressView())
+                }
             }
         }
-        // This frame and layoutPriority are critical for the equal distribution
-        // inside the HStacks and VStacks in the parent view.
+        // GeometryReader collapses otherwise — give it room
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .clipped()
         .clipShape(RoundedRectangle(cornerRadius: 12))
-        .contentShape(RoundedRectangle(cornerRadius: 12)) // Ensure the entire area is tappable
+        .contentShape(RoundedRectangle(cornerRadius: 12))
         .shadow(radius: 2)
         .onTapGesture(perform: onTap)
     }

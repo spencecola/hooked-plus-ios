@@ -9,10 +9,11 @@ struct CreatePostView: View {
     @State private var description: String = ""
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var selectedImages: [UIImage] = []
-    @State private var showingSpeciesSearch = true
+    @State private var showingSpeciesSearch = false
     @State private var selectedSpecies: SpeciesData?
     @State private var showingCamera = false
     @State private var isUploading = false
+    @State private var isCatch = false
     @StateObject private var viewModel: FeedViewModel
     @Environment(\.dismiss) private var dismiss
     
@@ -32,16 +33,17 @@ struct CreatePostView: View {
                 selectedSpecies: $selectedSpecies,
                 showingCamera: $showingCamera,
                 isUploading: $isUploading,
+                isCatch: $isCatch,
                 maxImages: maxImages,
                 viewModel: viewModel,
                 onCancel: { dismiss() },
                 onPost: {
                     let location = viewModel.state.currentLocation?.coordinate
                     viewModel.createPost(
+                        isCatch: isCatch,
                         description: description,
                         photos: selectedItems,
-                        latitude: location?.latitude,
-                        longitude: location?.longitude
+                        species: selectedSpecies
                     )
                     dismiss()
                 }
@@ -60,11 +62,11 @@ struct PostContentView: View {
     @Binding var selectedSpecies: SpeciesData?
     @Binding var showingCamera: Bool
     @Binding var isUploading: Bool
+    @Binding var isCatch: Bool
     let maxImages: Int
     let viewModel: FeedViewModel
     let onCancel: () -> Void
     let onPost: () -> Void
-    @State private var isCatch: Bool = false
     
     var body: some View {
         ScrollView {
@@ -80,7 +82,7 @@ struct PostContentView: View {
                     .pickerStyle(.segmented)
                 }
                 
-                DescriptionInputView(description: $description)
+                DescriptionInputView(description: $description, isCatch: $isCatch)
                 ImagePreviewView(selectedImages: $selectedImages)
                 PhotosPickerView(
                     selectedItems: $selectedItems,
@@ -145,9 +147,10 @@ struct PostContentView: View {
 // Extracted description input view
 struct DescriptionInputView: View {
     @Binding var description: String
+    @Binding var isCatch: Bool
     
     var body: some View {
-        TextField("What's on your mind?", text: $description, axis: .vertical)
+        TextField(isCatch ? "Describe your catch" : "What's on your mind?", text: $description, axis: .vertical)
             .font(.body)
             .padding()
             .background(Color(.systemGray6))

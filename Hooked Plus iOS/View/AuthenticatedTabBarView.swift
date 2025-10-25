@@ -13,15 +13,26 @@ struct AuthenticatedTabBarView: View {
 
     var body: some View {
         TabView {
-            HomeView()
-                .tabItem {
-                    Label("Home", systemImage: "house")
-                }
-            // TODO: use swinject
-            ProfileView(viewModel: HookedAssembly.resolver.resolve(ProfileViewModel.self)!)
-                .tabItem {
-                    Label("Profile", systemImage: "person")
-                }
+            LazyView {
+                HomeView()
+            }
+            .tabItem {
+                Label("Home", systemImage: "house")
+            }
+            
+            LazyView {
+                MyCatchesView(viewModel: MyCatchesViewModel())
+            }
+            .tabItem {
+                Label("Catch Log", systemImage: "fish")
+            }
+            
+            LazyView {
+                ProfileView(viewModel: HookedAssembly.resolver.resolve(ProfileViewModel.self)!)
+            }
+            .tabItem {
+                Label("Profile", systemImage: "person")
+            }
         }.background(ColorToken.backgroundPrimary.color)
     }
 }

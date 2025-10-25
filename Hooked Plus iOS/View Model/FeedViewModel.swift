@@ -66,7 +66,7 @@ class FeedViewModel: ObservableObject {
         }
     }
     
-    func createPost(description: String, tags: [String] = [], photos: [PhotosPickerItem]) {
+    func createPost(isCatch: Bool, description: String, tags: [String] = [], photos: [PhotosPickerItem], species: SpeciesData? = nil) {
         Task {
             
             defer {
@@ -76,7 +76,9 @@ class FeedViewModel: ObservableObject {
             state.loading = true
             do {
                 try await FeedService.uploadPost(
+                    isCatch: isCatch,
                     description: description,
+                    species: species,
                     tags: tags,
                     selectedItems: photos,
                     locationManager: locationManager

@@ -8,7 +8,7 @@
 import Foundation
 
 struct SpeciesData: Codable {
-    var scientificName: String
+    var scientificName: String?
     var taxOCode: String?
     var a3Code: String?
     var issCaap: Int?
