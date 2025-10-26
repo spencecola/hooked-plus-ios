@@ -1,61 +1,93 @@
 import SwiftUI
-
-struct Friend: Identifiable {
-    let id = UUID()
-    let name: String
-    let username: String
-}
+import Combine
 
 struct FindFriendsView: View {
     @State private var searchText = ""
     @Environment(\.dismiss) var dismiss
+    @StateObject private var viewModel = FindFriendsViewModel()
+    @State private var searchCancellable: AnyCancellable?
+    @State var friendRequested: Bool = false
     
-    // Sample data - replace with your actual data source
-    private let friends = [
-        Friend(name: "John Doe", username: "@johndoe"),
-        Friend(name: "Jane Smith", username: "@janesmith"),
-        Friend(name: "Alex Johnson", username: "@alexj"),
-        Friend(name: "Sarah Williams", username: "@sarahw"),
-        Friend(name: "Mike Brown", username: "@mikeb")
-    ]
-    
-    // Computed property to filter friends based on search text
-    private var filteredFriends: [Friend] {
-        if searchText.isEmpty {
-            return friends
-        } else {
-            return friends.filter { friend in
-                friend.name.lowercased().contains(searchText.lowercased()) ||
-                friend.username.lowercased().contains(searchText.lowercased())
-            }
-        }
-    }
-    
+
     var body: some View {
         NavigationStack {
             VStack {
-                // Search Bar
-                SearchBar(text: $searchText)
-                    .padding(.horizontal)
-                
-                // Friends List
-                List {
-                    ForEach(filteredFriends) { friend in
-                        FriendRow(friend: friend)
-                    }
-                }
-                .listStyle(.plain)
+                searchBar
+                contentView
             }
             .navigationTitle("Find Friends")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
+                    Button("Cancel") { dismiss() }
                 }
             }
+            .onAppear {
+                if viewModel.state.friends.isEmpty {
+                    viewModel.resetAndFetch(query: "")
+                }
+            }
+            .snackBar(isPresented: $friendRequested, type: .success, message: "A friend request has been sent")
+            .snackBar(isPresented: Binding(get: {
+                viewModel.state.errorMessage != nil
+            }, set: { _ in
+                // no op
+            }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong. Please try again later")
         }
+    }
+
+    // MARK: - Subviews
+
+    private var searchBar: some View {
+        SearchBar(text: $searchText)
+            .padding(.horizontal)
+            .onChange(of: searchText) { newValue in
+                debounceSearch(newValue)
+            }
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+        if viewModel.state.loading && viewModel.state.friends.isEmpty {
+            ProgressView("Loading Friends…")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            friendsList
+        }
+    }
+
+    private var friendsList: some View {
+        List {
+            ForEach(viewModel.state.friends) { friend in
+                FriendRow(friend: friend, friendRequested: $friendRequested)
+                    .onAppear {
+                        if friend == viewModel.state.friends.last {
+                            viewModel.fetchNextPage(query: searchText)
+                        }
+                    }
+            }
+
+            if viewModel.state.loading {
+                HStack {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                }
+                .listRowSeparator(.hidden)
+            }
+        }
+        .listStyle(.plain)
+    }
+
+    // MARK: - Debounced Search
+
+    private func debounceSearch(_ query: String) {
+        searchCancellable?.cancel()
+        searchCancellable = Just(query)
+            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .sink { text in
+                viewModel.resetAndFetch(query: text)
+            }
     }
 }
 
@@ -91,19 +123,18 @@ struct SearchBar: View {
 
 // Friend Row Component
 struct FriendRow: View {
-    let friend: Friend
+    let friend: UserData
+    @Binding var friendRequested: Bool
     
     var body: some View {
         HStack {
             // Profile picture placeholder
-            Circle()
-                .fill(Color(.systemGray4))
-                .frame(width: 40, height: 40)
+            ProfileIconView(profileIconUrl: friend.profileIcon, size: 40)
             
             VStack(alignment: .leading) {
-                Text(friend.name)
+                Text("\(friend.firstName) \(friend.lastName)")
                     .font(.headline)
-                Text(friend.username)
+                Text(friend.email)
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
@@ -112,16 +143,10 @@ struct FriendRow: View {
             
             // Add friend button
             Button("Add") {
-                
+                friendRequested = true
             }
             .buttonStyle(PrimaryButtonStyle())
             .padding(.vertical, 4)
         }
-    }
-}
-
-struct FindFriendsView_Previews: PreviewProvider {
-    static var previews: some View {
-        FindFriendsView()
     }
 }

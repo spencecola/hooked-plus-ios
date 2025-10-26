@@ -13,7 +13,7 @@ struct CreatePostView: View {
     @State private var selectedSpecies: SpeciesData?
     @State private var showingCamera = false
     @State private var isUploading = false
-    @State private var isCatch = false
+    @State private var isCatch = true
     @StateObject private var viewModel: FeedViewModel
     @Environment(\.dismiss) private var dismiss
     

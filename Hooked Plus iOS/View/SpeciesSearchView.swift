@@ -60,13 +60,6 @@ struct SpeciesSearchView: View {
                         }
                     }
                 }
-                
-                // Error message if present
-                if let errorMessage = viewModel.state.errorMessage {
-                    Text(errorMessage)
-                        .foregroundColor(.red)
-                        .padding()
-                }
             }
             .searchable(text: $searchText, prompt: "Search species...")
             .onChange(of: searchText) { newValue in
@@ -78,6 +71,11 @@ struct SpeciesSearchView: View {
                 }
             }
             .navigationTitle("Species Search")
+            .snackBar(isPresented: Binding(get: {
+                viewModel.state.errorMessage != nil
+            }, set: { _ in
+                // no op
+            }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong. Please try again later.")
         }
     }
 }

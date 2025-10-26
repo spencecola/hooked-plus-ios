@@ -12,6 +12,7 @@ struct MyCatchData: Codable, Identifiable {
     var species: SpeciesData?
     var createdAt: Date?
     var images: [String]?
+    var weather: WeatherData?
 }
 
 struct MyCatchesResponse: Codable {

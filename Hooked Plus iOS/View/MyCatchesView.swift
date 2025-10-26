@@ -26,48 +26,67 @@ struct MyCatchesView: View {
             .refreshable {
                 viewModel.refreshMyCatches()
             }
-            
-            // Error message if present
-            if let errorMessage = viewModel.state.errorMessage {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
         }
         .loading(isLoading: viewModel.state.loading)
+        .snackBar(isPresented: Binding(get: {
+            viewModel.state.errorMessage != nil
+        }, set: { _ in
+            // no op
+        }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong. Please try again later.")
     }
 }
 
 struct MyCatchView: View {
     
+    @State private var selectedImage: String? = nil
+    
     var item: MyCatchData
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(spacing: 8) {
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(item.species?.englishName ?? "")
+                    .font(.title)
                     .listRowBackground(Color(ColorToken.backgroundPrimary.color))
-                    .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)) // Add 8pt spacing above and below each row
-                
-                Spacer()
                 
                 // Time ago
                 if let createdAt = item.createdAt {
                     Text(timeAgo(from: createdAt))
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .listRowBackground(Color(ColorToken.backgroundPrimary.color))
+                }
+                
+                // Weather degrees when caught
+                if let weather = item.weather {
+                    HStack {
+                        Image(systemName: "cloud.sun.rain.fill").padding(.trailing, 4)
+                        Text("\(weather.formattedTemperature) \(weather.formattedWind)")
+                    }
                 }
             }
-            // Image card
-            ImageCardView(images: item.images ?? [])
-                .padding(.horizontal)
+          
+            Spacer()
+            // grabs a random image of the images provided and displays
+            if let image = item.images?.randomElement() {
+                ImageView(url: image) {
+                    selectedImage = image
+                }
+                .frame(width: 80, height: 100)
+                .padding(8)
+            }
+        }
+        .fullScreenCover(item: Binding(
+            get: { selectedImage.map { IdentifiableImage(url: $0) } },
+            set: { _ in selectedImage = nil }
+        )) { identifiableImage in
+            FullScreenImageView(imageUrl: identifiableImage.url)
         }
     }
     
-    // Convert Date to "time ago" string
     private func timeAgo(from date: Date) -> String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .abbreviated // e.g., "2h ago"
-        return formatter.localizedString(for: date, relativeTo: Date())
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, yyyy" // e.g., "April 25, 2025"
+        let formattedDate = formatter.string(from: date)
+        return formattedDate
     }
 }

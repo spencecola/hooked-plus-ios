@@ -66,7 +66,7 @@ struct PostView: View {
             
             // Image card
             ImageCardView(images: images)
-                .padding(.horizontal) 
+                .padding(.horizontal)
             
             
             // Description (shown only if present)

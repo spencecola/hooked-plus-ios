@@ -10,18 +10,30 @@ struct FeedView: View {
     
     var body: some View {
         ZStack {
-            List {
-                ForEach(viewModel.state.feed.data) { item in
-                    PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [])
-                        .listRowBackground(Color(ColorToken.backgroundPrimary.color))
-                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)) // Add 8pt spacing above and below each row
+            ScrollView {
+                LazyVStack(spacing: 16) {
+                    ForEach(viewModel.state.feed.data, id: \.id) { item in
+                        PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [])
+                    }
                 }
             }
-            .listStyle(.plain) // Use plain style for minimal padding and full width
             .frame(maxWidth: .infinity) // Ensure List takes full width
             .refreshable {
                 viewModel.refreshFeed()
             }
+            
+//            List {
+//                ForEach(viewModel.state.feed.data) { item in
+//                    PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [])
+//                        .listRowBackground(Color(ColorToken.backgroundPrimary.color))
+//                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)) // Add 8pt spacing above and below each row
+//                }
+//            }
+//            .listStyle(.plain) // Use plain style for minimal padding and full width
+//            .frame(maxWidth: .infinity) // Ensure List takes full width
+//            .refreshable {
+//                viewModel.refreshFeed()
+//            }
             
             // Floating Action Button
             VStack {
@@ -51,6 +63,11 @@ struct FeedView: View {
         .onAppear {
             viewModel.refreshFeed()
         }
+        .snackBar(isPresented: Binding(get: {
+            viewModel.state.errorMessage != nil
+        }, set: { _ in
+            // no op
+        }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong. Please try again later.")
     }
 }
 

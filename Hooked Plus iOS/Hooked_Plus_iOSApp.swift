@@ -18,6 +18,7 @@ struct Hooked_Plus_iOSApp: App {
     var body: some Scene {
         WindowGroup {
             Router()
+                .environment(\.imageCache, TemporaryImageCache())
         }
     }
 }

@@ -8,18 +8,12 @@
 import SwiftUI
 
 struct LazyView<Content: View>: View {
-    @ViewBuilder let content: () -> Content
-    @State private var hasAppeared = false
-    
+    private let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+
     var body: some View {
-        if hasAppeared {
-            content()
-        } else {
-            Color.clear // Placeholder to trigger .onAppear without visual impact
-                .frame(width: 0, height: 0) // Optional: minimize layout impact
-                .onAppear {
-                    hasAppeared = true
-                }
-        }
+        build()
     }
 }
