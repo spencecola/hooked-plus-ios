@@ -3,7 +3,11 @@ import Combine
 struct SpeciesState {
     var loading: Bool = false
     var errorMessage: String?
-    var species: [SpeciesData] = []
+    var species: [SpeciesData] = [] {
+        didSet {
+            errorMessage = nil
+        }
+    }
 }
 
 class SpeciesViewModel: ObservableObject {

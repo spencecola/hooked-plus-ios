@@ -22,10 +22,10 @@ struct AuthenticatedTabBarView: View {
             
             LazyView(NavigationStack {
                 MyCatchesView(viewModel: MyCatchesViewModel())
-                    .navigationTitle("Catch Log")
+                    .navigationTitle("Fishing Log")
             })
             .tabItem {
-                Label("Catch Log", systemImage: "fish")
+                Label("Fish Log", systemImage: "fish")
             }
             
             LazyView(NavigationStack {
@@ -35,7 +35,8 @@ struct AuthenticatedTabBarView: View {
             .tabItem {
                 Label("Profile", systemImage: "person")
             }
-        }.background(ColorToken.backgroundPrimary.color)
+        }
+        .background(ColorToken.backgroundPrimary.color)
     }
 }
 

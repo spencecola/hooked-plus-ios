@@ -47,7 +47,7 @@ struct FeedView: View {
                             .font(.title2)
                             .foregroundColor(.white)
                             .padding()
-                            .background(Color.blue)
+                            .background(ColorToken.buttonSecondary.color)
                             .clipShape(Circle())
                             .shadow(radius: 4)
                     }

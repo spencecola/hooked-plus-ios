@@ -10,9 +10,22 @@ import _PhotosUI_SwiftUI
 
 struct FeedState {
     var loading: Bool = false
-    var postCreated: Bool = false
+    var postCreated: Bool = false {
+        didSet {
+            if postCreated {
+                errorMessage = nil
+            }
+        }
+    }
+    
     var errorMessage: String?
-    var feed: FeedResponse = FeedResponse(page: 1, limit: 20, total: 20, data: [])
+    
+    var feed: FeedResponse = FeedResponse(page: 1, limit: 20, total: 20, data: []) {
+        didSet {
+            errorMessage = nil
+        }
+    }
+    
     var currentLocation: CLLocation?
     var currentWeather: WeatherData?
 }

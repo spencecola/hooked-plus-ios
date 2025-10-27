@@ -23,6 +23,7 @@ struct Router: View {
                 EmptyView()
             }
         }.loading(isLoading: authManager.isLoading())
+            .tint(ColorToken.buttonSecondary.color)
             .background(ColorToken.backgroundPrimary.color)
     }
 }

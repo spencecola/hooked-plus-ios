@@ -52,14 +52,14 @@ struct MyCatchView: View {
                 // Time ago
                 if let createdAt = item.createdAt {
                     Text(timeAgo(from: createdAt))
-                        .font(.subheadline)
+                        .font(.title2)
                         .listRowBackground(Color(ColorToken.backgroundPrimary.color))
                 }
                 
                 // Weather degrees when caught
                 if let weather = item.weather {
                     HStack {
-                        Image(systemName: "cloud.sun.rain.fill").padding(.trailing, 4)
+                        Image(systemName: "cloud.sun.rain.fill").padding(.trailing, 0)
                         Text("\(weather.formattedTemperature) \(weather.formattedWind)")
                     }
                 }
@@ -71,7 +71,7 @@ struct MyCatchView: View {
                 ImageView(url: image) {
                     selectedImage = image
                 }
-                .frame(width: 80, height: 100)
+                .frame(width: 100, height: 120)
                 .padding(8)
             }
         }

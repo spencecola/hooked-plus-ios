@@ -6,6 +6,7 @@ struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
     @State private var firstNameInput: String = ""
     @State private var lastNameInput: String = ""
+    @State private var showFindFriendsSheet: Bool = false
     @State private var showFriendsSheet: Bool = false
     @State private var selectedPhotoItem: PhotosPickerItem? = nil
     
@@ -43,8 +44,12 @@ struct ProfileView: View {
                         
                         // Find friends
                         Button("Find Friends") {
-                            showFriendsSheet = true
+                            showFindFriendsSheet = true
                         }.buttonStyle(PrimaryButtonStyle())
+                        
+                        Button("My Friends") {
+                            showFriendsSheet = true
+                        }.buttonStyle(OutlineButtonStyle())
                         
                         Text("Email: \(userData.email)")
                         Text("Name: \(userData.firstName) \(userData.lastName)")
@@ -75,8 +80,11 @@ struct ProfileView: View {
             }
         }
         .loading(isLoading: viewModel.state.isLoading())
-        .sheet(isPresented: $showFriendsSheet) {
+        .sheet(isPresented: $showFindFriendsSheet) {
             FindFriendsView()
+        }
+        .sheet(isPresented: $showFriendsSheet) {
+            FriendsView()
         }
     }
 }

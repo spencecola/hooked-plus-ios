@@ -43,6 +43,9 @@ class FindFriendsViewModel: ObservableObject {
                 // Append new species to existing ones
                 state.friends.append(contentsOf: response.users)
                 
+                // remove error message
+                state.errorMessage = nil
+                
                 // Increment page for next fetch
                 currentPage += 1
             } catch {
@@ -63,5 +66,16 @@ class FindFriendsViewModel: ObservableObject {
         state.friends = []
         state.errorMessage = nil
         fetchNextPage(query: query)
+    }
+    
+    func addFriend(friendId: String) {
+        Task {
+            do {
+                state.errorMessage = nil // remove system error when trying to add friend
+                try await FriendsService.addFriend(friendId: friendId)
+            } catch {
+                state.errorMessage = error.localizedDescription
+            }
+        }
     }
 }

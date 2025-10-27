@@ -1,12 +1,19 @@
+//
+//  FriendsView.swift
+//  Hooked Plus iOS
+//
+//  Created by Spencer Newell on 10/26/25.
+//
+
 import SwiftUI
 import Combine
 
-struct FindFriendsView: View {
+struct FriendsView: View {
     @State private var searchText = ""
     @Environment(\.dismiss) var dismiss
     @StateObject private var viewModel = FindFriendsViewModel()
     @State private var searchCancellable: AnyCancellable?
-    @State var friendRequested: Bool = false
+    @State var friendApproved: Bool = false
     
 
     var body: some View {
@@ -15,7 +22,7 @@ struct FindFriendsView: View {
                 searchBar
                 contentView
             }
-            .navigationTitle("Find Friends")
+            .navigationTitle("Friends")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -27,7 +34,7 @@ struct FindFriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
-            .snackBar(isPresented: $friendRequested, type: .success, message: "A friend request has been sent")
+            .snackBar(isPresented: $friendApproved, type: .success, message: "Friend request accepted.")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
             }, set: { _ in
@@ -60,7 +67,7 @@ struct FindFriendsView: View {
         List {
             ForEach(viewModel.state.friends) { friend in
                 FriendRow(friend: friend) { friendId in
-                    friendRequested = true
+                    friendApproved = true
                     viewModel.addFriend(friendId: friendId)
                 }
                 .onAppear {
@@ -127,7 +134,7 @@ private struct SearchBar: View {
 // Friend Row Component
 private struct FriendRow: View {
     let friend: UserData
-    let onFriendRequested: (String) -> Void
+    let onFriendApproved: (String) -> Void
     var body: some View {
         HStack {
             // Profile picture placeholder
@@ -144,8 +151,8 @@ private struct FriendRow: View {
             Spacer()
             
             // Add friend button
-            Button("Add") {
-                onFriendRequested(friend.id)
+            Button("Accept") {
+                onFriendApproved(friend.id)
             }
             .buttonStyle(PrimaryButtonStyle())
             .padding(.vertical, 4)

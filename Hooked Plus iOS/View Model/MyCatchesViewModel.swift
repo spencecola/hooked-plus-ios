@@ -11,7 +11,11 @@ import _PhotosUI_SwiftUI
 struct MyCatchesState {
     var loading: Bool = false
     var errorMessage: String?
-    var myCatches: MyCatchesResponse = MyCatchesResponse(page: 1, limit: 20, catches: [])
+    var myCatches: MyCatchesResponse = MyCatchesResponse(page: 1, limit: 20, catches: []) {
+        didSet {
+            errorMessage = nil
+        }
+    }
 }
 
 @MainActor

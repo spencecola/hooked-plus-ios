@@ -8,6 +8,15 @@
 import Alamofire
 import FirebaseAuth
 
+enum FriendError: Error {
+    case authenticationFailed
+    case invalidURL
+    case invalidResponse
+    case imageConversionFailed
+    case networkError(String)
+    case serverError(Int, String?)
+}
+
 enum FriendsService {
     static func getSuggestedFriends(query: String, page: Int, limit: Int = 50) async throws -> FriendResponse {
         guard let user = Auth.auth().currentUser else {
@@ -43,6 +52,55 @@ enum FriendsService {
             return friends
         case .failure(let error):
             throw PostUploadError.networkError(error.localizedDescription)
+        }
+    }
+    
+    static func addFriend(friendId: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw PostUploadError.authenticationFailed
+        }
+        
+        // Get Firebase ID token
+        let idToken = try await user.getIDToken()
+        
+        // Construct URL
+        guard let url = URL(string: "\(APIConfig.baseURL)/v1/user/friend") else {
+            throw PostUploadError.invalidURL
+        }
+        
+        // Headers with Authorization
+        let headers: HTTPHeaders = [
+            .authorization(bearerToken: idToken),
+            .contentType("application/json")
+        ]
+        
+        // Request body
+        let parameters: [String: String] = [
+            "friendId": friendId
+        ]
+        
+        // Make the POST request using Alamofire
+        let response = await AF.request(url,
+                                      method: .post,
+                                      parameters: parameters,
+                                      encoding: JSONEncoding.default,
+                                      headers: headers)
+            .serializingData()
+            .response
+        
+        // Handle the response
+        guard let httpResponse = response.response else {
+            throw FriendError.invalidResponse
+        }
+        
+        switch response.result {
+        case .success:
+            guard httpResponse.statusCode == 201 else {
+                throw FriendError.invalidResponse
+            }
+            // Success, no need to return anything
+        case .failure(let error):
+            throw FriendError.networkError(error.localizedDescription)
         }
     }
 }
