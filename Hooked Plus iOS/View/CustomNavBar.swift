@@ -1,40 +1,42 @@
 import SwiftUI
 
 struct CustomNavBar: ViewModifier {
-    let appName: String = "Hooked+"
+    let appName = "Hooked+"
     let pageTitle: String
     let backgroundColor: Color
-    let titleColor: Color  // For inline title text
-    
-    init(pageTitle: String, backgroundColor: Color = .blue, titleColor: Color = .white) {
+
+    init(pageTitle: String,
+         backgroundColor: Color = ColorToken.headerPrimary.color) {
         self.pageTitle = pageTitle
         self.backgroundColor = backgroundColor
-        self.titleColor = titleColor
     }
-    
+
     func body(content: Content) -> some View {
         NavigationStack {
             content
-                .navigationTitle(pageTitle)  // Standard large title behavior
-                .navigationBarTitleDisplayMode(.large)  // Enables large title (scroll-aware)
+                .navigationTitle(pageTitle)
+                .navigationBarTitleDisplayMode(.large)
                 .toolbarBackground(backgroundColor, for: .navigationBar)
                 .toolbarBackground(.visible, for: .navigationBar)
+                // <--- Force the nav bar to use "dark" appearance (white text/icons)
+                .toolbarColorScheme(.dark, for: .navigationBar)
                 .toolbar {
-                    // App name in leading (visible in inline mode)
                     ToolbarItem(placement: .topBarLeading) {
                         Text(appName)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .foregroundColor(titleColor)
+                            .font(.title2).bold()
+                            .foregroundColor(.white)
                     }
                 }
         }
     }
 }
 
-// Convenience extension
+// MARK: – Convenience
 extension View {
-    func customNavBar(title: String, backgroundColor: Color = ColorToken.headerPrimary.color, titleColor: Color = ColorToken.textPrimary.color) -> some View {
-        self.modifier(CustomNavBar(pageTitle: title, backgroundColor: backgroundColor, titleColor: titleColor))
+    func customNavBar(
+        title: String,
+        backgroundColor: Color = ColorToken.headerPrimary.color
+    ) -> some View {
+        modifier(CustomNavBar(pageTitle: title, backgroundColor: backgroundColor))
     }
 }
