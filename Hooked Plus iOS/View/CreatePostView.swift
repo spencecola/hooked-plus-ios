@@ -7,6 +7,8 @@ import MapKit
 
 struct CreatePostView: View {
     @State private var description: String = ""
+    @State private var weight: String = ""
+    @State private var depth: String = ""
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var selectedImages: [UIImage] = []
     @State private var showingSpeciesSearch = false
@@ -27,6 +29,8 @@ struct CreatePostView: View {
         NavigationStack {
             PostContentView(
                 description: $description,
+                weight: $weight,
+                depth: $depth,
                 selectedItems: $selectedItems,
                 selectedImages: $selectedImages,
                 showingSpeciesSearch: $showingSpeciesSearch,
@@ -38,17 +42,19 @@ struct CreatePostView: View {
                 viewModel: viewModel,
                 onCancel: { dismiss() },
                 onPost: {
-                    let location = viewModel.state.currentLocation?.coordinate
                     viewModel.createPost(
                         isCatch: isCatch,
                         description: description,
                         photos: selectedItems,
-                        species: selectedSpecies
+                        species: selectedSpecies,
+                        depth: depth,
+                        weight: weight
                     )
                     dismiss()
                 }
             )
             .navigationTitle("Create Post")
+            .background(ColorToken.backgroundPrimary.color)
         }
     }
 }
@@ -56,6 +62,8 @@ struct CreatePostView: View {
 // Extracted content view to simplify the main view hierarchy
 struct PostContentView: View {
     @Binding var description: String
+    @Binding var weight: String
+    @Binding var depth: String
     @Binding var selectedItems: [PhotosPickerItem]
     @Binding var selectedImages: [UIImage]
     @Binding var showingSpeciesSearch: Bool
@@ -97,7 +105,8 @@ struct PostContentView: View {
                 // Conditionally show views based on isCatch
                 if isCatch {
                     WeatherView(weather: viewModel.state.currentWeather)
-                    LocationView(location: viewModel.state.currentLocation)
+                    LocationView(location: viewModel.state.currentLocation, authStatus: viewModel.state.locationAuthorization, onRequestLocationPermission: viewModel.onRequestLocationPermission)
+                    
                     SelectedSpeciesView(showSelectSpeciesView: $showingSpeciesSearch, selectedSpecies: $selectedSpecies)
                 }
             }
@@ -140,6 +149,7 @@ struct PostContentView: View {
                 }
             }
             .loading(isLoading: viewModel.state.loading)
+            .background(ColorToken.backgroundPrimary.color)
         }
     }
 }
@@ -214,7 +224,7 @@ struct WeatherView: View {
     
     var body: some View {
         if let weather {
-            Text("\(weather.formattedTemperature) \(weather.formattedWind)")
+            Text("\(weather.formattedTemperature) \(weather.formattedWind)").font(.title2)
         }
     }
 }
@@ -223,55 +233,171 @@ struct WeatherView: View {
 struct LocationView: View {
     @State private var placeName: String = "Fetching location..."
     @State private var depth: String = ""
+    @State private var weight: String = ""
+    @State private var isRequestingPermission = false
     let location: CLLocation?
+    let authStatus: CLAuthorizationStatus?
+    var onRequestLocationPermission: () -> Void
     
+    // MARK: - Authorization Actions
+    private var shouldRequestPermission: Bool {
+        authStatus == .notDetermined
+    }
+    
+    private var shouldShowSettings: Bool {
+        [CLAuthorizationStatus.denied, .restricted].contains(authStatus ?? .authorizedAlways)
+    }
+    
+    private var authorizationMessage: String {
+        switch authStatus {
+        case .notDetermined:
+            return "Tap to enable location"
+        case .denied, .restricted:
+            return "Location access denied"
+        case .authorizedWhenInUse, .authorizedAlways:
+            return "Fetching location..."
+        default:
+            return "Location unavailable"
+        }
+    }
+    
+    // MARK: - Body
     var body: some View {
         HStack {
-            if let coordinate = location?.coordinate {
-                Map(coordinateRegion: .constant(MKCoordinateRegion(
-                    center: coordinate,
-                    span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                )), annotationItems: [LocationPin(coordinate: coordinate)]) { pin in
-                    MapMarker(coordinate: pin.coordinate, tint: .red)
-                }
-                .frame(height: 100)
-                .cornerRadius(8)
-            } else {
-                Text("Fetching location...")
-                    .foregroundColor(.gray)
-            }
-            
+            locationContent
             VStack(alignment: .leading) {
+                locationInfo
+                TextField("Depth in feet", text: $depth)
+                    .keyboardType(.decimalPad)
+                    .textContentType(.none)
+                TextField("Weight in pounds", text: $weight)
+                    .keyboardType(.decimalPad)
+                    .textContentType(.none)
+            }
+        }
+        .onAppear {
+            updatePlaceNameIfPossible()
+        }
+    }
+    
+    // MARK: - Location Content
+    @ViewBuilder
+    private var locationContent: some View {
+        if let coordinate = location?.coordinate {
+            Map(coordinateRegion: .constant(MKCoordinateRegion(
+                center: coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            )), annotationItems: [LocationPin(coordinate: coordinate)]) { pin in
+                MapMarker(coordinate: pin.coordinate, tint: .red)
+            }
+            .frame(height: 100)
+            .cornerRadius(8)
+        } else if shouldRequestPermission {
+            permissionRequestView
+        } else if shouldShowSettings {
+            settingsView
+        } else {
+            ProgressView()
+                .frame(height: 100)
+                .foregroundColor(.gray)
+        }
+    }
+    
+    // MARK: - Permission Request View
+    private var permissionRequestView: some View {
+        Button(action: requestLocationPermission) {
+            VStack {
+                Image(systemName: "location.circle")
+                    .font(.title2)
+                    .foregroundColor(.blue)
+                Text(authorizationMessage)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .frame(height: 100)
+            .frame(maxWidth: .infinity)
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(8)
+        }
+        .disabled(isRequestingPermission)
+    }
+    
+    // MARK: - Settings View
+    private var settingsView: some View {
+        Button(action: openSettings) {
+            VStack {
+                Image(systemName: "location.slash")
+                    .font(.title2)
+                    .foregroundColor(.orange)
+                Text(authorizationMessage)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text("Tap to enable in Settings")
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+            .frame(height: 100)
+            .frame(maxWidth: .infinity)
+            .background(Color.gray.opacity(0.1))
+            .cornerRadius(8)
+        }
+    }
+    
+    // MARK: - Location Info
+    @ViewBuilder
+    private var locationInfo: some View {
+        Group {
+            if shouldRequestPermission || shouldShowSettings {
+                Text(authorizationMessage)
+                    .foregroundColor(.secondary)
+            } else {
                 Text(placeName)
                     .lineLimit(2)
-                    .onAppear {
-                        if let coordinate = location?.coordinate {
-                            fetchPlaceName(for: coordinate)
-                        }
-                    }
-                TextField("Depth", text: $depth)
-                    .keyboardType(.numberPad)
-                    .textContentType(.none)
             }
         }
     }
     
+    // MARK: - Actions
+    private func requestLocationPermission() {
+        guard !isRequestingPermission else { return }
+        isRequestingPermission = true
+        onRequestLocationPermission()
+        isRequestingPermission = false
+    }
+    
+    private func openSettings() {
+        if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(settingsUrl)
+        }
+    }
+    
+    private func updatePlaceNameIfPossible() {
+        guard let coordinate = location?.coordinate,
+              authStatus == .authorizedWhenInUse || authStatus == .authorizedAlways else {
+            return
+        }
+        fetchPlaceName(for: coordinate)
+    }
+    
+    // MARK: - Geocoding
     private func fetchPlaceName(for coordinate: CLLocationCoordinate2D) {
         let geocoder = CLGeocoder()
         let location = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         
         geocoder.reverseGeocodeLocation(location) { placemarks, error in
-            if let error = error {
-                print("Geocoding error: \(error.localizedDescription)")
-                placeName = "Unknown location"
-                return
-            }
-            
-            if let placemark = placemarks?.first {
-                let name = placemark.name ?? placemark.locality ?? placemark.administrativeArea ?? "Unknown location"
-                placeName = name
-            } else {
-                placeName = "Unknown location"
+            DispatchQueue.main.async {
+                if let error = error {
+                    print("Geocoding error: \(error.localizedDescription)")
+                    self.placeName = "Unknown location"
+                    return
+                }
+                
+                if let placemark = placemarks?.first {
+                    let name = placemark.name ?? placemark.locality ?? placemark.administrativeArea ?? "Unknown location"
+                    self.placeName = name
+                } else {
+                    self.placeName = "Unknown location"
+                }
             }
         }
     }
@@ -282,18 +408,10 @@ struct SelectedSpeciesView: View {
     @Binding var selectedSpecies: SpeciesData?
     
     var body: some View {
-        HStack {
-            Text(selectedSpecies?.englishName ?? "No species selected")
-                .font(.body)
-                .foregroundColor(selectedSpecies != nil ? .primary : .gray)
-            Spacer()
-        }
-        .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(8)
-        .onTapGesture {
+        Button(selectedSpecies?.englishName ?? "No species selected") {
             showSelectSpeciesView = true
-        }
+        }.buttonStyle(OutlineButtonStyle())
+            .padding(.horizontal, 8)
     }
 }
 

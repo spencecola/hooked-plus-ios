@@ -11,6 +11,7 @@ struct SpeciesSearchView: View {
     @ObservedObject private var viewModel: SpeciesViewModel
     @State private var searchText: String = ""
     @State private var lastSearchLength: Int = 0
+    @Environment(\.dismiss) var dismiss
     private let onSpeciesSelected: (SpeciesData) -> Void
     
     init(vm: SpeciesViewModel, onSpeciesSelected: @escaping (SpeciesData) -> Void) {
@@ -71,6 +72,12 @@ struct SpeciesSearchView: View {
                 }
             }
             .navigationTitle("Species Search")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+            }
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
             }, set: { _ in

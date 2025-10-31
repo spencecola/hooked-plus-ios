@@ -1,20 +1,20 @@
 //
-//  FindFriendsViewModel.swift
+//  FriendsViewModel.swift
 //  Hooked Plus iOS
 //
-//  Created by Spencer Newell on 10/24/25.
+//  Created by Spencer Newell on 10/27/25.
 //
 
 import Combine
 
-struct FindFriendsState {
+struct FriendsState {
     var loading: Bool = false
     var errorMessage: String?
-    var friends: [UserData] = []
+    var friends: [FriendUserData] = []
 }
 
-class FindFriendsViewModel: ObservableObject {
-    @Published var state: FindFriendsState = FindFriendsState()
+class FriendsViewModel: ObservableObject {
+    @Published var state: FriendsState = FriendsState()
     private var currentPage: Int = 1
     private let limit: Int = 50
     private var isFetching: Bool = false
@@ -35,7 +35,7 @@ class FindFriendsViewModel: ObservableObject {
             
             do {
                 // Fetch species data for the current page
-                let response = try await FriendsService.getSuggestedFriends(query: query, page: currentPage, limit: limit)
+                let response = try await FriendsService.getFriends(query: query, status: "accepted", page: currentPage, limit: limit)
                 
                 // Update total results
                 totalResults = response.total
@@ -68,14 +68,14 @@ class FindFriendsViewModel: ObservableObject {
         fetchNextPage(query: query)
     }
     
-    func addFriend(friendId: String) {
-        Task {
-            do {
-                state.errorMessage = nil // remove system error when trying to add friend
-                try await FriendsService.addFriend(friendId: friendId)
-            } catch {
-                state.errorMessage = error.localizedDescription
-            }
-        }
-    }
+//    func removeFriend(friendId: String) {
+//        Task {
+//            do {
+//                state.errorMessage = nil // remove system error when trying to add friend
+//                try await FriendsService.addFriend(friendId: friendId)
+//            } catch {
+//                state.errorMessage = error.localizedDescription
+//            }
+//        }
+//    }
 }

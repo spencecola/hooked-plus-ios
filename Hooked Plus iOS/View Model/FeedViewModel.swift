@@ -27,6 +27,7 @@ struct FeedState {
     }
     
     var currentLocation: CLLocation?
+    var locationAuthorization: CLAuthorizationStatus?
     var currentWeather: WeatherData?
 }
 
@@ -34,7 +35,7 @@ struct FeedState {
 class FeedViewModel: ObservableObject {
     
     private var locationManager: LocationManager
-    private var locationCancellable: Cancellable?
+    private var locationCancellables = Set<AnyCancellable>()
     @Published var state: FeedState = FeedState()
     
     init(locationManager: LocationManager) {
@@ -47,9 +48,19 @@ class FeedViewModel: ObservableObject {
         // request location permission
         locationManager.requestLocationPermission()
         // listen for location updates
-        locationCancellable = locationManager.$currentLocation.sink { [weak self] location in
+        locationCancellables.insert(locationManager.$currentLocation.sink { [weak self] location in
             self?.state.currentLocation = location
             self?.getWeather(lat: location?.coordinate.latitude, lng: location?.coordinate.longitude)
+        })
+        // listen for location status updates
+        locationCancellables.insert(locationManager.$authorizationStatus.sink { [weak self] authStatus in
+            self?.state.locationAuthorization = authStatus
+        })
+    }
+    
+    func onRequestLocationPermission() {
+        DispatchQueue.main.async { [weak self] in
+            self?.locationManager.requestLocationPermission()
         }
     }
     
@@ -79,7 +90,7 @@ class FeedViewModel: ObservableObject {
         }
     }
     
-    func createPost(isCatch: Bool, description: String, tags: [String] = [], photos: [PhotosPickerItem], species: SpeciesData? = nil) {
+    func createPost(isCatch: Bool, description: String, tags: [String] = [], photos: [PhotosPickerItem], species: SpeciesData? = nil, depth: String? = nil, weight: String? = nil) {
         Task {
             
             defer {
@@ -91,6 +102,8 @@ class FeedViewModel: ObservableObject {
                 try await FeedService.uploadPost(
                     isCatch: isCatch,
                     description: description,
+                    weight: weight,
+                    depth: depth,
                     species: species,
                     tags: tags,
                     selectedItems: photos,
@@ -105,7 +118,23 @@ class FeedViewModel: ObservableObject {
         }
     }
     
+    func likePost(postId: String) {
+        Task {
+            do {
+                state.loading = true
+                try await FeedService.likePost(postId: postId)
+                state.loading = false
+                refreshFeed()
+            } catch {
+                state.loading = false
+                state.errorMessage = "Failed to like this post"
+            }
+        }
+    }
+    
     deinit {
-        locationCancellable?.cancel()
+        locationCancellables.forEach { cancellable in
+            cancellable.cancel()
+        }
     }
 }

@@ -41,36 +41,42 @@ struct ProfileView: View {
                             }
                         }
                         .padding(16)
-                        
-                        // Find friends
-                        Button("Find Friends") {
-                            showFindFriendsSheet = true
-                        }.buttonStyle(PrimaryButtonStyle())
-                        
-                        Button("My Friends") {
-                            showFriendsSheet = true
-                        }.buttonStyle(OutlineButtonStyle())
-                        
-                        Text("Email: \(userData.email)")
-                        Text("Name: \(userData.firstName) \(userData.lastName)")
+//                        
+                        Text(userData.email).font(.title2)
+//                        Text("Name: \(userData.firstName) \(userData.lastName)")
                         TextField("First Name", text: $firstNameInput)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .padding(.horizontal, 8)
                             .onChange(of: firstNameInput) { newValue in
                                 viewModel.setFirstName(firstName: newValue)
                             }
+                        
                         TextField("Last Name", text: $lastNameInput)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .padding(.horizontal)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .padding(.horizontal, 8)
                             .onChange(of: lastNameInput) { newValue in
                                 viewModel.setLastName(lastName: newValue)
                             }
                     }
                 }
                 
-                Button("Sign Out") {
-                    viewModel.signout()
-                }.buttonStyle(OutlineButtonStyle(backgroundColor: ColorToken.buttonDanger.color))
+                VStack(spacing: 16) {
+                    // Find friends
+                    Button("Find Friends") {
+                        showFindFriendsSheet = true
+                    }.buttonStyle(PrimaryButtonStyle())
+                        .padding(.horizontal, 8)
+                    
+                    Button("My Friends") {
+                        showFriendsSheet = true
+                    }.buttonStyle(OutlineButtonStyle())
+                        .padding(.horizontal, 8)
+                    
+                    Button("Sign Out") {
+                        viewModel.signout()
+                    }.buttonStyle(OutlineButtonStyle(backgroundColor: ColorToken.buttonDanger.color))
+                        .padding(.horizontal, 8)
+                }
             }
         }
         .onAppear {
@@ -84,8 +90,9 @@ struct ProfileView: View {
             FindFriendsView()
         }
         .sheet(isPresented: $showFriendsSheet) {
-            FriendsView()
+            FriendHubView()
         }
+        .background(ColorToken.backgroundPrimary.color)
     }
 }
 

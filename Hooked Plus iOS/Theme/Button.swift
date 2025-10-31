@@ -11,6 +11,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     var backgroundColor: Color = ColorToken.buttonPrimary.color
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .frame(maxWidth: .infinity)
             .padding()
             .foregroundColor(.white)
             .background(backgroundColor) // Solid dark gray background
@@ -25,6 +26,7 @@ struct OutlineButtonStyle: ButtonStyle {
     var backgroundColor: Color = ColorToken.buttonSecondary.color
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .frame(maxWidth: .infinity)
             .padding()
             .foregroundColor(backgroundColor)
             .background(
@@ -39,6 +41,7 @@ struct OutlineButtonStyle: ButtonStyle {
 struct TextButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .frame(maxWidth: .infinity)
             .foregroundColor(configuration.isPressed ? .gray : .blue)
             .font(.system(size: 16, weight: .medium))
             .padding(.vertical, 4)

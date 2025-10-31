@@ -11,7 +11,7 @@ import Combine
 struct FriendsView: View {
     @State private var searchText = ""
     @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = FindFriendsViewModel()
+    @StateObject private var viewModel = FriendsViewModel()
     @State private var searchCancellable: AnyCancellable?
     @State var friendApproved: Bool = false
     
@@ -34,6 +34,7 @@ struct FriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
+            .background(ColorToken.backgroundPrimary.color)
             .snackBar(isPresented: $friendApproved, type: .success, message: "Friend request accepted.")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
@@ -66,10 +67,8 @@ struct FriendsView: View {
     private var friendsList: some View {
         List {
             ForEach(viewModel.state.friends) { friend in
-                FriendRow(friend: friend) { friendId in
-                    friendApproved = true
-                    viewModel.addFriend(friendId: friendId)
-                }
+                FriendRow(friend: friend)
+                .listRowBackground(ColorToken.backgroundPrimary.color)
                 .onAppear {
                     if friend == viewModel.state.friends.last {
                         viewModel.fetchNextPage(query: searchText)
@@ -133,29 +132,21 @@ private struct SearchBar: View {
 
 // Friend Row Component
 private struct FriendRow: View {
-    let friend: UserData
-    let onFriendApproved: (String) -> Void
+    let friend: FriendUserData
     var body: some View {
         HStack {
             // Profile picture placeholder
-            ProfileIconView(profileIconUrl: friend.profileIcon, size: 40)
+            ProfileIconView(profileIconUrl: friend.user.profileIcon, size: 40)
             
             VStack(alignment: .leading) {
-                Text("\(friend.firstName) \(friend.lastName)")
+                Text("\(friend.user.firstName) \(friend.user.lastName)")
                     .font(.headline)
-                Text(friend.email)
+                Text(friend.user.email)
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
             
             Spacer()
-            
-            // Add friend button
-            Button("Accept") {
-                onFriendApproved(friend.id)
-            }
-            .buttonStyle(PrimaryButtonStyle())
-            .padding(.vertical, 4)
         }
     }
 }

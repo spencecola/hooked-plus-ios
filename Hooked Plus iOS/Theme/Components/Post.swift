@@ -9,8 +9,9 @@ struct PostView: View {
     let images: [String]
     let likeCount: Int
     let commentCount: Int
+    let onLike: () -> Void
     
-    init(firstName: String, lastName: String, profileIcon: String? = nil, description: String? = nil, timestamp: Date, images: [String], likeCount: Int = 0, commentCount: Int = 0) {
+    init(firstName: String, lastName: String, profileIcon: String? = nil, description: String? = nil, timestamp: Date, images: [String], likeCount: Int = 0, commentCount: Int = 0, onLike: @escaping () -> Void) {
         self.firstName = firstName
         self.lastName = lastName
         self.profileIcon = profileIcon
@@ -19,6 +20,7 @@ struct PostView: View {
         self.images = images
         self.likeCount = likeCount
         self.commentCount = commentCount
+        self.onLike = onLike
     }
     
     var body: some View {
@@ -81,7 +83,10 @@ struct PostView: View {
             HStack {
                 Image(systemName: "heart")
                     .foregroundColor(.gray)
-                Text("\(likeCount) Likes")
+                    .onTapGesture {
+                        onLike()
+                    }
+                Text("\(likeCount) \(likeCount == 1 ? "Like" : "Likes")")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 
@@ -89,7 +94,7 @@ struct PostView: View {
                 
                 Image(systemName: "bubble.left")
                     .foregroundColor(.gray)
-                Text("\(commentCount) Comments")
+                Text("\(commentCount) \(commentCount == 1 ? "Comment" : "Comments")")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }

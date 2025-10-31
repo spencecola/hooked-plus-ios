@@ -13,7 +13,7 @@ enum PostUploadError: Error {
 }
 
 enum FeedService {
-    static func uploadPost(isCatch: Bool = false, description: String?, species: SpeciesData? = nil, tags: [String] = [], selectedItems: [PhotosPickerItem] = [], locationManager: LocationManager = LocationManager()) async throws {
+    static func uploadPost(isCatch: Bool = false, description: String?, weight: String? = nil, depth: String? = nil, species: SpeciesData? = nil, tags: [String] = [], selectedItems: [PhotosPickerItem] = [], locationManager: LocationManager = LocationManager()) async throws {
         
         guard let user = Auth.auth().currentUser else {
             throw PostUploadError.authenticationFailed
@@ -79,6 +79,16 @@ enum FeedService {
                 if let description = description,
                    let descriptionData = description.data(using: .utf8) {
                     multipartFormData.append(descriptionData, withName: "content[description]")
+                }
+                
+                // add weight
+                if let weight, let weightData = weight.data(using: .utf8) {
+                    multipartFormData.append(weightData, withName: "content[weight]")
+                }
+                
+                // add depth
+                if let depth, let depthData = depth.data(using: .utf8) {
+                    multipartFormData.append(depthData, withName: "content[depth]")
                 }
                 
                 // Add tags
@@ -154,6 +164,45 @@ enum FeedService {
         switch response.result {
         case .success(let feed):
             return feed
+        case .failure(let error):
+            throw PostUploadError.networkError(error.localizedDescription)
+        }
+    }
+    
+    static func likePost(postId: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            throw PostUploadError.authenticationFailed
+        }
+        
+        // Get Firebase ID token
+        let idToken = try await user.getIDToken()
+        
+        // Construct URL with postId
+        guard let url = URL(string: "\(APIConfig.baseURL)/v1/user/post/\(postId)/like") else {
+            throw PostUploadError.invalidURL
+        }
+        
+        // Headers with Authorization
+        let headers: HTTPHeaders = [
+            .authorization(bearerToken: idToken),
+            .contentType("application/json")
+        ]
+        
+        // Make PUT request (no body needed if backend just toggles like)
+        let response = await AF.request(url, method: .put, headers: headers)
+            .serializingData()
+            .response
+        
+        // Handle response
+        switch response.result {
+        case .success:
+            if let httpResponse = response.response, (200...299).contains(httpResponse.statusCode) {
+                return // Success
+            } else {
+                let statusCode = response.response?.statusCode ?? -1
+                let errorMessage = String(data: response.data ?? Data(), encoding: .utf8)
+                throw PostUploadError.serverError(statusCode, errorMessage)
+            }
         case .failure(let error):
             throw PostUploadError.networkError(error.localizedDescription)
         }

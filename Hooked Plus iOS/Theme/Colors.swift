@@ -13,6 +13,7 @@ enum ColorToken {
     case buttonPrimary
     case buttonSecondary
     case buttonDanger
+    case textPrimary
     case darkGray
     case lightGray
     case backgroundPrimary
@@ -20,13 +21,15 @@ enum ColorToken {
     var color: Color {
         switch self {
         case .headerPrimary:
-            return Color(hex: "#133456") | Color(hex: "#E6F0FA") // Pale blue for dark mode
+            return Color(hex: "#EF7F18") | Color(hex: "#133456") // Pale blue for dark mode
         case .buttonPrimary:
             return Color(hex: "#1B1A1D") | Color(hex: "#108080") // Light gray for dark mode
         case .buttonSecondary:
             return Color(hex: "#EF7F18") | Color(hex: "#108080") // Muted teal for dark mode
         case .buttonDanger:
             return Color(hex: "#C62828") | Color(hex: "#B71C1C") // Muted teal for dark mode
+        case .textPrimary:
+            return Color(hex: "#000000") | Color(hex: "#FFFFFF") // white for dark mode
         case .darkGray:
             return Color(hex: "#1B1A1D") | Color(hex: "#F9F9FA") // Light gray for dark mode
         case .lightGray:

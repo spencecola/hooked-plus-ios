@@ -1,12 +1,19 @@
+//
+//  PendingFriendsView.swift
+//  Hooked Plus iOS
+//
+//  Created by Spencer Newell on 10/27/25.
+//
+
 import SwiftUI
 import Combine
 
-struct FindFriendsView: View {
+struct PendingFriendsView: View {
     @State private var searchText = ""
     @Environment(\.dismiss) var dismiss
-    @StateObject private var viewModel = FindFriendsViewModel()
+    @StateObject private var viewModel = PendingFriendsViewModel()
     @State private var searchCancellable: AnyCancellable?
-    @State var friendRequested: Bool = false
+    @State var friendApproved: Bool = false
     
 
     var body: some View {
@@ -15,7 +22,7 @@ struct FindFriendsView: View {
                 searchBar
                 contentView
             }
-            .navigationTitle("Find Friends")
+            .navigationTitle("Pending Friends")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -27,8 +34,8 @@ struct FindFriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
-            .listRowBackground(ColorToken.backgroundPrimary.color)
-            .snackBar(isPresented: $friendRequested, type: .success, message: "A friend request has been sent")
+            .background(ColorToken.backgroundPrimary.color)
+            .snackBar(isPresented: $friendApproved, type: .success, message: "Friend request accepted.")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
             }, set: { _ in
@@ -61,8 +68,8 @@ struct FindFriendsView: View {
         List {
             ForEach(viewModel.state.friends) { friend in
                 FriendRow(friend: friend) { friendId in
-                    friendRequested = true
-                    viewModel.addFriend(friendId: friendId)
+                    viewModel.approveFriend(friendId: friendId)
+                    friendApproved = true
                 }
                 .listRowBackground(ColorToken.backgroundPrimary.color)
                 .onAppear {
@@ -128,17 +135,17 @@ private struct SearchBar: View {
 
 // Friend Row Component
 private struct FriendRow: View {
-    let friend: UserData
-    let onFriendRequested: (String) -> Void
+    let friend: FriendUserData
+    let onFriendAccepted: (String) -> Void
     var body: some View {
         HStack {
             // Profile picture placeholder
-            ProfileIconView(profileIconUrl: friend.profileIcon, size: 40)
+            ProfileIconView(profileIconUrl: friend.user.profileIcon, size: 40)
             
             VStack(alignment: .leading) {
-                Text("\(friend.firstName) \(friend.lastName)")
+                Text("\(friend.user.firstName) \(friend.user.lastName)")
                     .font(.headline)
-                Text(friend.email)
+                Text(friend.user.email)
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
@@ -146,8 +153,8 @@ private struct FriendRow: View {
             Spacer()
             
             // Add friend button
-            Button("Add") {
-                onFriendRequested(friend.id)
+            Button("Accept") {
+                onFriendAccepted(friend.id)
             }
             .buttonStyle(PrimaryButtonStyle())
             .padding(.vertical, 4)

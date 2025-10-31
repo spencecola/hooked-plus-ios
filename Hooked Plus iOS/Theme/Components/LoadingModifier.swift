@@ -14,14 +14,11 @@ struct LoadingModifier: ViewModifier {
         ZStack {
             content
             if isLoading {
-                Color.white.opacity(0.5)
-                    .ignoresSafeArea()
-                    .animation(.easeInOut(duration: 0.2), value: isLoading)
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())
                     .scaleEffect(1.5)
                     .padding()
-                    .background(Color.gray.opacity(0.3))
+//                    .background(ColorToken.backgroundPrimary.color.opacity(0.3))
                     .clipShape(Circle())
             }
         }

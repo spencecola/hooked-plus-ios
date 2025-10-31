@@ -22,7 +22,8 @@ struct AuthenticatedTabBarView: View {
             
             LazyView(NavigationStack {
                 MyCatchesView(viewModel: MyCatchesViewModel())
-                    .navigationTitle("Fishing Log")
+                    .customNavBar(title: "Fishing Log")
+//                    .navigationTitle("Fishing Log")
             })
             .tabItem {
                 Label("Fish Log", systemImage: "fish")
@@ -30,7 +31,8 @@ struct AuthenticatedTabBarView: View {
             
             LazyView(NavigationStack {
                 ProfileView(viewModel: HookedAssembly.resolver.resolve(ProfileViewModel.self)!)
-                    .navigationTitle("Profile")
+                    .customNavBar(title: "Profile")
+//                    .navigationTitle("Profile")
             })
             .tabItem {
                 Label("Profile", systemImage: "person")

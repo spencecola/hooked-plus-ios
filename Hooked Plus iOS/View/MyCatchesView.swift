@@ -16,9 +16,17 @@ struct MyCatchesView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
+            
             List {
+                if viewModel.state.myCatches.catches.isEmpty {
+                    Text("You currently have recorded no catches")
+                        .hookedText(font: .title2)
+                        .listRowBackground(ColorToken.backgroundPrimary.color)
+                }
+                
                 ForEach(viewModel.state.myCatches.catches) { item in
                     MyCatchView(item: item)
+                        .listRowBackground(ColorToken.backgroundPrimary.color)
                 }
             }
             .listStyle(.plain) // Use plain style for minimal padding and full width
@@ -26,6 +34,7 @@ struct MyCatchesView: View {
             .refreshable {
                 viewModel.refreshMyCatches()
             }
+            .background(ColorToken.backgroundPrimary.color)
         }
         .loading(isLoading: viewModel.state.loading)
         .snackBar(isPresented: Binding(get: {

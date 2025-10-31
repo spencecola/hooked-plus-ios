@@ -12,8 +12,16 @@ struct FeedView: View {
         ZStack {
             ScrollView {
                 LazyVStack(spacing: 16) {
+                    if viewModel.state.feed.data.isEmpty && !viewModel.state.loading {
+                        Text("There is currently no content to show. Try finding and adding friends to generate a feed.")
+                            .hookedText(font: .title2)
+                    }
+                    
                     ForEach(viewModel.state.feed.data, id: \.id) { item in
-                        PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [])
+                        PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [], likeCount: item.likeCount ?? 0) {
+                            // like post
+                            viewModel.likePost(postId: item.id)
+                        }
                     }
                 }
             }
@@ -21,19 +29,6 @@ struct FeedView: View {
             .refreshable {
                 viewModel.refreshFeed()
             }
-            
-//            List {
-//                ForEach(viewModel.state.feed.data) { item in
-//                    PostView(firstName: item.firstName ?? "", lastName: item.lastName ?? "", profileIcon: item.profileIcon, description: item.content?.description, timestamp: item.timestamp ?? Date(), images: item.images ?? [])
-//                        .listRowBackground(Color(ColorToken.backgroundPrimary.color))
-//                        .listRowInsets(EdgeInsets(top: 16, leading: 0, bottom: 16, trailing: 0)) // Add 8pt spacing above and below each row
-//                }
-//            }
-//            .listStyle(.plain) // Use plain style for minimal padding and full width
-//            .frame(maxWidth: .infinity) // Ensure List takes full width
-//            .refreshable {
-//                viewModel.refreshFeed()
-//            }
             
             // Floating Action Button
             VStack {
