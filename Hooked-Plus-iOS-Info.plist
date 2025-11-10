@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key></key>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app uses the microphone to record audio clips.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Record short clips to share with friends</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your app needs your location to provide navigation features.</string>
 	<key>CFBundleTypeRole</key>

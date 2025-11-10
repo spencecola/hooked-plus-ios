@@ -27,7 +27,7 @@ struct FindFriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
-            .listRowBackground(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundPrimary.color)
             .snackBar(isPresented: $friendRequested, type: .success, message: "A friend request has been sent")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
@@ -59,6 +59,12 @@ struct FindFriendsView: View {
 
     private var friendsList: some View {
         List {
+            if viewModel.state.friends.isEmpty {
+                Text("There are currently no new friends we can suggest to you")
+                    .hookedText(font: .title2)
+                    .listRowBackground(ColorToken.backgroundPrimary.color)
+            }
+            
             ForEach(viewModel.state.friends) { friend in
                 FriendRow(friend: friend) { friendId in
                     friendRequested = true

@@ -9,11 +9,12 @@ import SwiftUI
 
 struct LazyView<Content: View>: View {
     private let build: () -> Content
-    init(_ build: @autoclosure @escaping () -> Content) {
+    
+    init(@ViewBuilder _ build: @escaping () -> Content) {
         self.build = build
     }
-
+    
     var body: some View {
-        build()
+        build()          // ← only builds when it appears
     }
 }

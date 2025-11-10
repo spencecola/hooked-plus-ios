@@ -13,27 +13,26 @@ struct AuthenticatedTabBarView: View {
 
     var body: some View {
         TabView {
-            LazyView(NavigationStack {
-                HomeView()
-            })
+            LazyView { NavigationStack {
+                FeedView(viewModel: FeedViewModel(locationManager: LocationManager()))
+                    .customNavBar(title: "Feed")
+            } }
             .tabItem {
                 Label("Home", systemImage: "house")
             }
             
-            LazyView(NavigationStack {
+            LazyView { NavigationStack {
                 MyCatchesView(viewModel: MyCatchesViewModel())
                     .customNavBar(title: "Fishing Log")
-//                    .navigationTitle("Fishing Log")
-            })
+            } }
             .tabItem {
                 Label("Fish Log", systemImage: "fish")
             }
             
-            LazyView(NavigationStack {
+            LazyView { NavigationStack {
                 ProfileView(viewModel: HookedAssembly.resolver.resolve(ProfileViewModel.self)!)
                     .customNavBar(title: "Profile")
-//                    .navigationTitle("Profile")
-            })
+            } }
             .tabItem {
                 Label("Profile", systemImage: "person")
             }

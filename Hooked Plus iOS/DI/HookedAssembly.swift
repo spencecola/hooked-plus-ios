@@ -27,5 +27,16 @@ struct HookedAssembly: Assembly {
             let authManager = resolver.resolve(AuthManagable.self)!
             return ProfileViewModel(repository: repository, authManager: authManager)
         }
+        
+        // Add this inside assemble(container:)
+        container.register(CameraHost.self) { _ in
+            CameraHost()
+        }
+        .inObjectScope(.container)
+        
+        container.register(CameraManager.self) { resolver in
+            resolver.resolve(CameraHost.self)!.manager
+        }
+        .inObjectScope(.container)
     }
 }

@@ -19,11 +19,6 @@ struct LoginView: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            Text("Welcome to Hooked Plus")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.bottom, 20)
-
             switch currentView {
             case .signIn:
                 SignInView(
@@ -68,6 +63,7 @@ struct LoginView: View {
         }
         .padding()
         .background(ColorToken.backgroundPrimary.color)
+        .customNavBar(title: "Welcome")
     }
 
     private func resetFields() {

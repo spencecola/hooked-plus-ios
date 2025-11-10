@@ -66,6 +66,13 @@ struct PendingFriendsView: View {
 
     private var friendsList: some View {
         List {
+            
+            if viewModel.state.friends.isEmpty {
+                Text("You have no friends pending at this time")
+                    .hookedText(font: .title2)
+                    .listRowBackground(ColorToken.backgroundPrimary.color)
+            }
+            
             ForEach(viewModel.state.friends) { friend in
                 FriendRow(friend: friend) { friendId in
                     viewModel.approveFriend(friendId: friendId)

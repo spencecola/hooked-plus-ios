@@ -1,27 +1,24 @@
+//
+//  PostView.swift
+//  Hooked Plus iOS
+//
+
 import SwiftUI
 
 struct PostView: View {
+    let postId: String                 // ← ADD THIS
     let firstName: String
     let lastName: String
     let profileIcon: String?
     let description: String?
     let timestamp: Date
     let images: [String]
-    let likeCount: Int
-    let commentCount: Int
+    @Binding var likeCount: Int        // ← Make Binding so updates reflect
+    @Binding var commentCount: Int     // ← Make Binding
     let onLike: () -> Void
     
-    init(firstName: String, lastName: String, profileIcon: String? = nil, description: String? = nil, timestamp: Date, images: [String], likeCount: Int = 0, commentCount: Int = 0, onLike: @escaping () -> Void) {
-        self.firstName = firstName
-        self.lastName = lastName
-        self.profileIcon = profileIcon
-        self.description = description
-        self.timestamp = timestamp
-        self.images = images
-        self.likeCount = likeCount
-        self.commentCount = commentCount
-        self.onLike = onLike
-    }
+    // MARK: - Modal State
+    @State private var showingComments = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -62,14 +59,13 @@ struct PostView: View {
                 // Time ago
                 Text(timeAgo(from: timestamp))
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(ColorToken.textSecondary.color)
             }
             .padding(.horizontal)
             
             // Image card
             ImageCardView(images: images)
                 .padding(.horizontal)
-            
             
             // Description (shown only if present)
             if let description = description, !description.isEmpty {
@@ -81,32 +77,89 @@ struct PostView: View {
             
             // Likes and Comments
             HStack {
-                Image(systemName: "heart")
-                    .foregroundColor(.gray)
-                    .onTapGesture {
-                        onLike()
+                // Like Button
+                Button {
+                    onLike()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.red)
+                        Text("\(likeCount) \(likeCount == 1 ? "Like" : "Likes")")
                     }
-                Text("\(likeCount) \(likeCount == 1 ? "Like" : "Likes")")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(ColorToken.textSecondary.color)
+                }
                 
                 Spacer()
                 
-                Image(systemName: "bubble.left")
-                    .foregroundColor(.gray)
-                Text("\(commentCount) \(commentCount == 1 ? "Comment" : "Comments")")
+                // Comment Button → Opens Modal
+                Button {
+                    showingComments = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "bubble.left")
+                            .foregroundColor(ColorToken.textSecondary.color)
+                        Text("\(commentCount) \(commentCount == 1 ? "Comment" : "Comments")")
+                    }
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(ColorToken.textSecondary.color)
+                }
             }
             .padding(.horizontal)
         }
         .padding(.vertical, 4)
+        
+        // MARK: - Full-Screen Comment Modal
+        .fullScreenCover(isPresented: $showingComments) {
+            CommentsModal(postId: postId, commentCount: $commentCount)
+        }
     }
     
     // Convert Date to "time ago" string
     private func timeAgo(from date: Date) -> String {
         let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .abbreviated // e.g., "2h ago"
+        formatter.unitsStyle = .abbreviated
         return formatter.localizedString(for: date, relativeTo: Date())
+    }
+}
+
+// MARK: - Modal Wrapper with Live Comment Count Update
+private struct CommentsModal: View {
+    let postId: String
+    @Binding var commentCount: Int
+    @Environment(\.dismiss) private var dismiss
+    
+    var body: some View {
+        NavigationView {
+            PostCommentsView(postId: postId)
+                .navigationTitle("Comments")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Done") { dismiss() }
+                    }
+                }
+                .onReceive(NotificationCenter.default.publisher(for: .commentCountDidChange)) { notification in
+                    if let count = notification.object as? Int {
+                        commentCount = count
+                    }
+                }
+        }
+    }
+}
+
+// MARK: - Helper: Broadcast Comment Count Updates
+extension Notification.Name {
+    static let commentCountDidChange = Notification.Name("commentCountDidChange")
+}
+
+// MARK: - Update CommentViewModel to Broadcast Count
+// ADD THIS TO YOUR CommentViewModel.swift (just once!)
+extension CommentViewModel {
+    private func broadcastCommentCount() {
+        NotificationCenter.default.post(
+            name: .commentCountDidChange,
+            object: state.comments.count
+        )
     }
 }

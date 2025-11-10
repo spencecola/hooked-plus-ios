@@ -36,6 +36,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             let assembly = HookedAssembly()
             assembly.assemble(container: AppDelegate.container)
 
+            // set camera permissions
+            _ = HookedAssembly.resolver.resolve(CameraHost.self)
             return true
         }
 }

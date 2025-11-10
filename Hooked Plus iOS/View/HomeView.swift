@@ -42,5 +42,6 @@ struct HomeView: View {
         }
         .padding()
         .background(ColorToken.backgroundPrimary.color)
+        
     }
 }

@@ -10,15 +10,21 @@ import SwiftUI
 struct Router: View {
     @StateObject private var authManager = AuthManager()
 
+    @StateObject private var cameraHost = HookedAssembly.resolver.resolve(CameraHost.self)!
+    
     var body: some View {
         Group {
             if case .unauthenticated = authManager.state {
                 LoginView()
                     .environmentObject(authManager)
             } else if case .authenticated(_) = authManager.state {
-                AuthenticatedTabBarView()
-                    .environmentObject(authManager)
-                    .background(ColorToken.backgroundPrimary.color)
+                RecordingOverlayContainer {
+                        AuthenticatedTabBarView()
+                            .environmentObject(authManager)
+                }
+                .environmentObject(authManager)
+                .environmentObject(cameraHost)
+                .background(ColorToken.backgroundPrimary.color)
             } else {
                 EmptyView()
             }

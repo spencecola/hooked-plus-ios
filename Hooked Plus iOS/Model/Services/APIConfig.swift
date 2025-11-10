@@ -10,7 +10,8 @@ import Foundation
 struct APIConfig {
     static var baseURL: String {
         #if DEBUG
-            return "http://localhost:3000"
+        return "https://hooked-plus.uc.r.appspot.com"
+            //return "http://localhost:3000"
         #else
             return "https://your-production-api.com"
         #endif

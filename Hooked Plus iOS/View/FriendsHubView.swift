@@ -10,13 +10,13 @@ import SwiftUI
 struct FriendHubView: View {
     // Enum for picker segments
     private enum FriendsTab: String, CaseIterable, Identifiable {
-        case pending = "Pending"
         case friends = "Friends"
+        case pending = "Pending"
         
         var id: String { rawValue }
     }
     
-    @State private var selectedTab: FriendsTab = .pending
+    @State private var selectedTab: FriendsTab = .friends
     
     var body: some View {
         VStack {
