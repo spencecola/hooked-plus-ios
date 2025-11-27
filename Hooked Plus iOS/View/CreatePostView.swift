@@ -12,6 +12,7 @@ struct CreatePostView: View {
     @State private var selectedItems: [PhotosPickerItem] = []
     @State private var selectedImages: [UIImage] = []
     @State private var showingSpeciesSearch = false
+    @State private var showLunkerConfirmation = false
     @State private var selectedSpecies: SpeciesData?
     @State private var showingCamera = false
     @State private var isUploading = false
@@ -34,6 +35,7 @@ struct CreatePostView: View {
                 selectedItems: $selectedItems,
                 selectedImages: $selectedImages,
                 showingSpeciesSearch: $showingSpeciesSearch,
+                showLunkerConfirmation: $showLunkerConfirmation,
                 selectedSpecies: $selectedSpecies,
                 showingCamera: $showingCamera,
                 isUploading: $isUploading,
@@ -54,7 +56,7 @@ struct CreatePostView: View {
                 }
             )
             .navigationTitle("Create Post")
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
         }
     }
 }
@@ -67,6 +69,7 @@ struct PostContentView: View {
     @Binding var selectedItems: [PhotosPickerItem]
     @Binding var selectedImages: [UIImage]
     @Binding var showingSpeciesSearch: Bool
+    @Binding var showLunkerConfirmation: Bool
     @Binding var selectedSpecies: SpeciesData?
     @Binding var showingCamera: Bool
     @Binding var isUploading: Bool
@@ -80,14 +83,9 @@ struct PostContentView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // Is this a catch? question
-                VStack(alignment: .leading, spacing: 8) {
+                Toggle(isOn: $isCatch) {
                     Text("Is this a catch?")
                         .font(.headline)
-                    Picker("Is this a catch?", selection: $isCatch) {
-                        Text("Yes").tag(true)
-                        Text("No").tag(false)
-                    }
-                    .pickerStyle(.segmented)
                 }
                 
                 DescriptionInputView(description: $description, isCatch: $isCatch)
@@ -147,9 +145,15 @@ struct PostContentView: View {
                     selectedSpecies = species
                     showingSpeciesSearch = false
                 }
+                .background(ColorToken.backgroundSecondary.color)
+            }
+            .sheet(isPresented: $showLunkerConfirmation) {
+                SheetView {
+                    
+                }
             }
             .loading(isLoading: viewModel.state.loading)
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
         }
     }
 }
@@ -161,10 +165,7 @@ struct DescriptionInputView: View {
     
     var body: some View {
         TextField(isCatch ? "Describe your catch" : "What's on your mind?", text: $description, axis: .vertical)
-            .font(.body)
-            .padding()
-            .background(Color(.systemGray6))
-            .cornerRadius(8)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
     }
 }
 

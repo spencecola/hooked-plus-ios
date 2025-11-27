@@ -84,6 +84,7 @@ struct SpeciesSearchView: View {
                 // no op
             }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong. Please try again later.")
         }
+        .background(ColorToken.backgroundSecondary.color)
     }
 }
 

@@ -34,7 +34,7 @@ struct PendingFriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
             .snackBar(isPresented: $friendApproved, type: .success, message: "Friend request accepted.")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
@@ -69,8 +69,8 @@ struct PendingFriendsView: View {
             
             if viewModel.state.friends.isEmpty {
                 Text("You have no friends pending at this time")
-                    .hookedText(font: .title2)
-                    .listRowBackground(ColorToken.backgroundPrimary.color)
+                    .hookedText()
+                    .listRowBackground(ColorToken.backgroundSecondary.color)
             }
             
             ForEach(viewModel.state.friends) { friend in
@@ -78,7 +78,7 @@ struct PendingFriendsView: View {
                     viewModel.approveFriend(friendId: friendId)
                     friendApproved = true
                 }
-                .listRowBackground(ColorToken.backgroundPrimary.color)
+                .listRowBackground(ColorToken.backgroundSecondary.color)
                 .onAppear {
                     if friend == viewModel.state.friends.last {
                         viewModel.fetchNextPage(query: searchText)

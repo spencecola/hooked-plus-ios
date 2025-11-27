@@ -37,7 +37,7 @@ struct AuthenticatedTabBarView: View {
                 Label("Profile", systemImage: "person")
             }
         }
-        .background(ColorToken.backgroundPrimary.color)
+        .background(ColorToken.backgroundSecondary.color)
     }
 }
 

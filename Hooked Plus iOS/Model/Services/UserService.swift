@@ -66,61 +66,65 @@ enum UserService {
         }
     }
     
-    static func uploadProfileIcon(selectedItem: PhotosPickerItem) async throws -> String {
+    static func uploadProfileIcon(selectedItem: PhotosPickerItem) async throws -> UserData {
         guard let user = Auth.auth().currentUser else {
             throw UserError.authenticationFailed
         }
-        
-        // Get Firebase ID token
+
+        // Firebase ID token
         let idToken = try await user.getIDToken()
-        
-        // Use debug-appropriate base URL
+
         guard let url = URL(string: "\(APIConfig.baseURL)/v1/user/profile-icon") else {
             throw UserError.invalidURL
         }
-        
-        // Headers with Authorization
+
         let headers: HTTPHeaders = [
             .authorization(bearerToken: idToken),
             .contentType("multipart/form-data")
         ]
-        
-        // Convert PhotosPickerItem to image data
-        guard let data = try await selectedItem.loadTransferable(type: Data.self),
-              let image = UIImage(data: data),
-              let jpegData = image.jpegData(compressionQuality: 0.8) else {
+
+        // --- Load original data (supports HEIC, JPEG, PNG, RAW→bitmap, iCloud) ---
+        guard let data = try await selectedItem.loadTransferable(type: Data.self) else {
             throw UserError.imageConversionFailed
         }
-        
-        // Ensure image size is within 5MB limit
-        guard jpegData.count <= 5 * 1024 * 1024 else {
+
+        // Double-check the image is valid (protect against corrupt assets)
+        guard UIImage(data: data) != nil else {
             throw UserError.imageConversionFailed
         }
-        
-        // Create multipart form data using Alamofire
-        return try await withCheckedThrowingContinuation { continuation in
-            AF.upload(multipartFormData: { multipartFormData in
-                // Add image
-                multipartFormData.append(jpegData, withName: "image", fileName: "profile.jpg", mimeType: "image/jpeg")
-            }, to: url, headers: headers)
-            .response { response in
-                switch response.result {
-                case .success:
-                    if let httpResponse = response.response,
-                       (200...299).contains(httpResponse.statusCode),
-                       let data = response.data,
-                       let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-                       let profileIcon = json["profileIcon"] as? String {
-                        continuation.resume(returning: profileIcon)
-                    } else {
-                        let statusCode = response.response?.statusCode ?? -1
-                        let errorMessage = String(data: response.data ?? Data(), encoding: .utf8)
-                        continuation.resume(throwing: UserError.serverError(statusCode, errorMessage))
-                    }
-                case .failure(let error):
-                    continuation.resume(throwing: UserError.networkError(error.localizedDescription))
-                }
-            }
+
+        // --- Determine the file's true type (HEIC/JPEG/PNG/etc) ---
+        let contentTypes = selectedItem.supportedContentTypes
+
+        // Pick the most specific type (Photos usually sends only 1)
+        let type: UTType = contentTypes.first ?? .image
+
+        // Map UTType → correct MIME type and filename extension
+        let fileExtension = type.preferredFilenameExtension ?? "img"
+        let mimeType = type.preferredMIMEType ?? "application/octet-stream"
+
+        let fileName = "profile.\(fileExtension)"
+
+        // --- Validate size (<= 5MB) ---
+        guard data.count <= 5 * 1024 * 1024 else {
+            throw UserError.imageConversionFailed
         }
+
+        // --- Upload multipart ---
+        return try await AF.upload(
+            multipartFormData: { form in
+                form.append(
+                    data,
+                    withName: "image",
+                    fileName: fileName,
+                    mimeType: mimeType
+                )
+            },
+            to: url,
+            headers: headers
+        )
+        .serializingDecodable(UserData.self)
+        .value
     }
+
 }

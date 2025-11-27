@@ -30,7 +30,7 @@ struct SheetView<Content: View>: View {
                         Spacer()
                     }
                     .padding()
-                    .background(ColorToken.backgroundPrimary.color)
+                    .background(ColorToken.backgroundSecondary.color)
                 }
                 
                 // ───── Flexible Content Area ─────
@@ -38,7 +38,7 @@ struct SheetView<Content: View>: View {
                 // 2. If it overflows, wrap it in a ScrollView.
                 content
                     .padding()
-                    .frame(maxHeight: .infinity, alignment: .top)   // <-- fills remaining space
+                    .frame(maxHeight: .infinity, alignment: .top)
                     .background(
                         GeometryReader { proxy in
                             Color.clear

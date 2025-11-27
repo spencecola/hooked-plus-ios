@@ -12,7 +12,8 @@ struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
             .foregroundColor(.white)
             .background(backgroundColor) // Solid dark gray background
             .clipShape(RoundedRectangle(cornerRadius: 10))

@@ -17,6 +17,8 @@ import AVKit
 struct RecordingCameraView: View {
     @ObservedObject var camera: CameraManager
     
+    var onDismiss: () -> Void
+    
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
@@ -52,6 +54,25 @@ struct RecordingCameraView: View {
                 }
                 .padding(.bottom, 60)
             }
+            
+            // Close button
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: { onDismiss() }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.5))
+                            .clipShape(Circle())
+                    }
+                }
+                Spacer()
+            }
+            .padding(.vertical, 48)
+            .padding(.horizontal, 16)
             
             if camera.pendingVideoURL != nil || camera.lastRecordingURL != nil {
                 LazyView {

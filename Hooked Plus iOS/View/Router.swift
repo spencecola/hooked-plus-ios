@@ -24,13 +24,13 @@ struct Router: View {
                 }
                 .environmentObject(authManager)
                 .environmentObject(cameraHost)
-                .background(ColorToken.backgroundPrimary.color)
+                .background(ColorToken.backgroundSecondary.color)
             } else {
                 EmptyView()
             }
         }.loading(isLoading: authManager.isLoading())
             .tint(ColorToken.buttonSecondary.color)
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
     }
 }
 

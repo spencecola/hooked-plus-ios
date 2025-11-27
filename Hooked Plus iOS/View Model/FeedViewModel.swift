@@ -26,6 +26,7 @@ struct FeedState {
         }
     }
     
+    var stories: [FriendStoriesData] = []
     var currentLocation: CLLocation?
     var locationAuthorization: CLAuthorizationStatus?
     var currentWeather: WeatherData?
@@ -72,8 +73,13 @@ class FeedViewModel: ObservableObject {
             
             state.loading = true
             do {
+                // fetch feed
                 let feedResponse = try await FeedService.getFeed()
                 state.feed = feedResponse
+                
+                // fetch stories
+                let storiesResponse = try? await StoryService.fetchFriendStories()
+                state.stories = storiesResponse ?? []
             } catch {
                 debugPrint(error.localizedDescription)
                 state.errorMessage = "Failed to retrieve feed at this time."

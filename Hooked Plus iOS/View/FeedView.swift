@@ -20,12 +20,11 @@ struct FeedView: View {
             feedContent
             floatingActionButton
         }
-        .background(ColorToken.backgroundPrimary.color)
+        .background(ColorToken.backgroundSecondary.color)
         .sheet(isPresented: $createPost) {
             CreatePostView(viewModel: viewModel)
         }
         .loading(isLoading: viewModel.state.loading)
-        .onAppear { viewModel.refreshFeed() }
         .snackBar(
             isPresented: Binding(
                 get: { viewModel.state.errorMessage != nil },
@@ -42,8 +41,9 @@ private extension FeedView {
     var feedContent: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                StoriesView(stories: exampleStories)
-                                    .padding(.top, 8)
+                // check if stories is not empty before displaying
+                StoriesView(friendStories: viewModel.state.stories)
+                    .padding(.top, 8)
                 
                 if viewModel.state.feed.data.isEmpty && !viewModel.state.loading {
                     EmptyFeedView()
@@ -53,7 +53,7 @@ private extension FeedView {
                     }
                 }
             }
-            .contentMargins(.vertical, 8, for: .scrollContent)
+            .contentMargins(.vertical, 16, for: .scrollContent)
         }
         .frame(maxWidth: .infinity)
         .refreshable { viewModel.refreshFeed() }
@@ -64,7 +64,7 @@ private extension FeedView {
 private struct EmptyFeedView: View {
     var body: some View {
         Text("There is currently no content to show. Try finding and adding friends to generate a feed.")
-            .hookedText(font: .title2)
+            .hookedText()
             .multilineTextAlignment(.center)
             .foregroundColor(.secondary)
             .padding()
@@ -128,52 +128,4 @@ struct FeedView_Previews: PreviewProvider {
             .background(Color(.systemGroupedBackground))
     }
 }
-
-private let exampleStories: [StoryData] = [
-    StoryData(
-        userId: "user_001",
-        userProfileIconUrl: "https://i.pravatar.cc/150?img=1",
-        userFirstName: "Alex",
-        userLastName: "Johnson",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-        createdAt: Date(),
-        expiresAt: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!
-    ),
-    StoryData(
-        userId: "user_002",
-        userProfileIconUrl: "https://i.pravatar.cc/150?img=2",
-        userFirstName: "Sarah",
-        userLastName: "Williams",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-        createdAt: Date(),
-        expiresAt: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!
-    ),
-    StoryData(
-        userId: "user_003",
-        userProfileIconUrl: "https://i.pravatar.cc/150?img=3",
-        userFirstName: "Mike",
-        userLastName: "Anderson",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-        createdAt: Date(),
-        expiresAt: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!
-    ),
-    StoryData(
-        userId: "user_004",
-        userProfileIconUrl: "https://i.pravatar.cc/150?img=4",
-        userFirstName: "Emma",
-        userLastName: "Brown",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
-        createdAt: Date(),
-        expiresAt: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!
-    ),
-    StoryData(
-        userId: "user_005",
-        userProfileIconUrl: "https://i.pravatar.cc/150?img=5",
-        userFirstName: "John",
-        userLastName: "Taylor",
-        videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
-        createdAt: Date(),
-        expiresAt: Calendar.current.date(byAdding: .hour, value: 24, to: Date())!
-    )
-]
 

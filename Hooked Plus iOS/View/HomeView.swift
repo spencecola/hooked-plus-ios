@@ -41,7 +41,7 @@ struct HomeView: View {
             Spacer()
         }
         .padding()
-        .background(ColorToken.backgroundPrimary.color)
+        .background(ColorToken.backgroundSecondary.color)
         
     }
 }

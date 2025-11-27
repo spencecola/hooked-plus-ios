@@ -79,11 +79,11 @@ struct PostView: View {
             HStack {
                 // Like Button
                 Button {
+                    Haptic.light()
                     onLike()
                 } label: {
                     HStack(spacing: 4) {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.red)
+                        Image(systemName: "heart")
                         Text("\(likeCount) \(likeCount == 1 ? "Like" : "Likes")")
                     }
                     .font(.subheadline)

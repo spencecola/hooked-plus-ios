@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>953046662163-gfmftsmm68f5qp6heie9n2d8e59923v1.apps.googleusercontent.com</string>
+	<string>953046662163-e20pe7lo60ebtgtkirteu9a9ip26ilrv.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.953046662163-gfmftsmm68f5qp6heie9n2d8e59923v1</string>
+	<string>com.googleusercontent.apps.953046662163-e20pe7lo60ebtgtkirteu9a9ip26ilrv</string>
 	<key>API_KEY</key>
 	<string>AIzaSyA5oiAqrd3mr_Q4M5txmXn0K1l4FDdkS9o</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.hookedplus.Hooked-Plus-iOS</string>
+	<string>com.hookedplus.ios.app</string>
 	<key>PROJECT_ID</key>
 	<string>hooked-plus</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:953046662163:ios:aba44c5a83747f1d1d53e6</string>
+	<string>1:953046662163:ios:1928eb1f53175bf61d53e6</string>
 </dict>
 </plist>

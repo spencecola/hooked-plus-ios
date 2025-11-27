@@ -18,6 +18,7 @@ enum ColorToken {
     case darkGray
     case lightGray
     case backgroundPrimary
+    case backgroundSecondary
     
     var color: Color {
         switch self {
@@ -39,6 +40,8 @@ enum ColorToken {
             return Color(hex: "#F9F9FA") | Color(hex: "#1B1A1D") // Dark gray for dark mode
         case .backgroundPrimary:
             return Color(hex: "#FFFFFF") | Color(hex: "#133456") // Black for dark mode
+        case .backgroundSecondary:
+            return Color(hex: "#EFEFEF") | Color(hex: "#0a1a2b") // Black for dark mode
         }
     }
 }

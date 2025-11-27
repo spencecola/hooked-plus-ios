@@ -79,7 +79,7 @@ enum StoryService {
     }
     
     // MARK: - Fetch stories for friends
-    static func fetchFriendStories() async throws -> [StoryData] {
+    static func fetchFriendStories() async throws -> [FriendStoriesData] {
         guard let user = Auth.auth().currentUser else {
             throw StoryError.authenticationFailed
         }
@@ -96,12 +96,12 @@ enum StoryService {
         
         let response = await AF.request(url, headers: headers)
             .validate(statusCode: 200...299)
-            .serializingDecodable([StoryData].self)
+            .serializingDecodable(StoriesResponse.self)
             .response
         
         switch response.result {
-        case .success(let stories):
-            return stories
+        case .success(let response):
+            return response.friendStories
         case .failure(let error):
             print("Fetch failed: \(error.localizedDescription)")
             if let data = response.data, let message = String(data: data, encoding: .utf8) {

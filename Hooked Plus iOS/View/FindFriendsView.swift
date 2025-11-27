@@ -27,7 +27,7 @@ struct FindFriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
             .snackBar(isPresented: $friendRequested, type: .success, message: "A friend request has been sent")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
@@ -61,8 +61,8 @@ struct FindFriendsView: View {
         List {
             if viewModel.state.friends.isEmpty {
                 Text("There are currently no new friends we can suggest to you")
-                    .hookedText(font: .title2)
-                    .listRowBackground(ColorToken.backgroundPrimary.color)
+                    .hookedText()
+                    .listRowBackground(ColorToken.backgroundSecondary.color)
             }
             
             ForEach(viewModel.state.friends) { friend in
@@ -70,7 +70,7 @@ struct FindFriendsView: View {
                     friendRequested = true
                     viewModel.addFriend(friendId: friendId)
                 }
-                .listRowBackground(ColorToken.backgroundPrimary.color)
+                .listRowBackground(ColorToken.backgroundSecondary.color)
                 .onAppear {
                     if friend == viewModel.state.friends.last {
                         viewModel.fetchNextPage(query: searchText)
@@ -109,14 +109,9 @@ private struct SearchBar: View {
     var body: some View {
         HStack {
             TextField("Search by name or username", text: $text)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.vertical, 8)
                 .padding(.horizontal, 12)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color(.systemGray4), lineWidth: 1)
-                )
             
             if !text.isEmpty {
                 Button(action: {

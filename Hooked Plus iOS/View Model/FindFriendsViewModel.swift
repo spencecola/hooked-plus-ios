@@ -73,6 +73,7 @@ class FindFriendsViewModel: ObservableObject {
             do {
                 state.errorMessage = nil // remove system error when trying to add friend
                 try await FriendsService.addFriend(friendId: friendId)
+                Haptic.light()
             } catch {
                 state.errorMessage = error.localizedDescription
             }

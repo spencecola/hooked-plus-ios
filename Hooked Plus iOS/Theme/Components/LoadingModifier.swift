@@ -18,7 +18,6 @@ struct LoadingModifier: ViewModifier {
                     .progressViewStyle(CircularProgressViewStyle())
                     .scaleEffect(1.5)
                     .padding()
-//                    .background(ColorToken.backgroundPrimary.color.opacity(0.3))
                     .clipShape(Circle())
             }
         }

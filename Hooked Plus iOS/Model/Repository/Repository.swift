@@ -11,6 +11,7 @@ protocol Repository<T> {
     associatedtype T
     var data: AnyPublisher<DataResult<T>, Never> { get }
     func put(data: T)
+    func refresh()
 }
 
 enum DataResult<T> {

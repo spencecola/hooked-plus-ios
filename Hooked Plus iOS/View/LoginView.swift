@@ -9,7 +9,7 @@ struct LoginView: View {
     @State private var password = ""
     @State private var firstName = ""
     @State private var lastName = ""
-    @State private var errorMessage = ""
+    @State private var errorMessage: String?
     @State private var currentView: ViewState = .signIn // Default to Sign In
     @State private var showEmailFields = false
 
@@ -53,16 +53,15 @@ struct LoginView: View {
                 )
             }
 
-            if !errorMessage.isEmpty {
-                Text(errorMessage)
-                    .foregroundColor(.red)
-                    .padding()
-            }
-
             Spacer()
         }
         .padding()
-        .background(ColorToken.backgroundPrimary.color)
+        .background(ColorToken.backgroundSecondary.color)
+        .snackBar(isPresented: Binding(get: {
+            errorMessage != nil
+        }, set: { _ in
+            // no op
+        }), type: .error, message: errorMessage ?? "Something went wrong. Please try again.")
         .customNavBar(title: "Welcome")
     }
 
@@ -71,7 +70,7 @@ struct LoginView: View {
         password = ""
         firstName = ""
         lastName = ""
-        errorMessage = ""
+        errorMessage = nil
         showEmailFields = false
     }
 }
@@ -82,7 +81,7 @@ struct SignUpView: View {
     @Binding var lastName: String
     @Binding var email: String
     @Binding var password: String
-    @Binding var errorMessage: String
+    @Binding var errorMessage: String?
     @Binding var showEmailFields: Bool
     let authManager: AuthManager
     let onSwitchToSignIn: () -> Void
@@ -129,8 +128,8 @@ struct SignUpView: View {
                     } else {
                         Task {
                             do {
-                                try await authManager.signInWithGoogle()
-                                errorMessage = ""
+                                try await authManager.signUpWithGoogle(firstName: firstName, lastName: lastName)
+                                errorMessage = nil
                                 onSignUp()
                             } catch {
                                 errorMessage = error.localizedDescription
@@ -160,11 +159,9 @@ struct SignUpView: View {
 
             TextField("Email", text: $email)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
                 .autocapitalization(.none)
             SecureField("Password", text: $password)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.horizontal)
 
             Button("Complete Sign Up") {
                 if email.isEmpty || password.isEmpty {
@@ -173,7 +170,7 @@ struct SignUpView: View {
                     Task {
                         do {
                             try await authManager.signUp(email: email, password: password, firstName: firstName, lastName: lastName)
-                            errorMessage = ""
+                            errorMessage = nil
                             onSignUp()
                         } catch {
                             errorMessage = error.localizedDescription
@@ -187,7 +184,7 @@ struct SignUpView: View {
                 showEmailFields = false
                 email = ""
                 password = ""
-                errorMessage = ""
+                errorMessage = nil
             }
             .buttonStyle(OutlineButtonStyle())
         }
@@ -198,7 +195,7 @@ struct SignUpView: View {
 struct SignInView: View {
     @Binding var email: String
     @Binding var password: String
-    @Binding var errorMessage: String
+    @Binding var errorMessage: String?
     let authManager: AuthManager
     let onSwitchToSignUp: () -> Void
     let onSignIn: () -> Void
@@ -214,7 +211,7 @@ struct SignInView: View {
                     Task {
                         do {
                             try await authManager.signInWithGoogle()
-                            errorMessage = ""
+                            errorMessage = nil
                             onSignIn()
                         } catch {
                             errorMessage = error.localizedDescription
@@ -240,7 +237,7 @@ struct SignInView: View {
                     Task {
                         do {
                             try await authManager.signIn(email: email, password: password)
-                            errorMessage = ""
+                            errorMessage = nil
                             onSignIn()
                         } catch {
                             errorMessage = error.localizedDescription
@@ -267,24 +264,27 @@ struct GoogleSignInButton: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Image("google_logo") // Ensure Google logo asset is in your project
+                Image("google_logo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24)
+
                 Text("Continue with Google")
                     .font(.headline)
             }
             .frame(maxWidth: .infinity)
             .padding()
             .background(Color.white)
-            .foregroundColor(.black)
+            .clipShape(RoundedRectangle(cornerRadius: 10))        // ← Important!
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray, lineWidth: 1)
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
             )
+            .foregroundColor(.black)
         }
     }
 }
+
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {

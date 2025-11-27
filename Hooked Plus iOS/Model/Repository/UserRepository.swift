@@ -27,6 +27,10 @@ class UserRepository: Repository {
         db.collection("users").document(user.uid).setData(data.toDictionary())
     }
     
+    func refresh() {
+        // no op
+    }
+    
     /// A data pipeline which will create a publisher off of user ID for updating user data based off of the user document
     static func userDataPipeline(db: Firestore, authManager: AuthManagable) -> AnyPublisher<DataResult<UserData>, Never> {
         authManager.statePublisher.compactMap { state in
@@ -47,11 +51,12 @@ class UserRepository: Repository {
                     return
                 }
                 
-                guard let documentData = document?.data() else {
+                guard let documentData = document?.data(), let userData = UserData(dictionary: documentData, id: document?.documentID) else {
+                    subject.send(DataResult.failure(data: nil, error: UserError.failedToCreate))
                     return
                 }
                 // send success with data
-                subject.send(DataResult.success(data: UserData(dictionary: documentData)))
+                subject.send(DataResult.success(data: userData))
             }
             return subject
                 .compactMap { $0 }

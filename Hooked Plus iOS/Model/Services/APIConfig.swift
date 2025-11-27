@@ -11,9 +11,9 @@ struct APIConfig {
     static var baseURL: String {
         #if DEBUG
         return "https://hooked-plus.uc.r.appspot.com"
-            //return "http://localhost:3000"
+//            return "http://localhost:3000"
         #else
-            return "https://your-production-api.com"
+        return "https://hooked-plus.uc.r.appspot.com"
         #endif
     }
 }

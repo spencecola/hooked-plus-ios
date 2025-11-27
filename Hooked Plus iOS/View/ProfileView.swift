@@ -41,9 +41,8 @@ struct ProfileView: View {
                             }
                         }
                         .padding(16)
-//                        
-                        Text(userData.email).font(.title2)
-//                        Text("Name: \(userData.firstName) \(userData.lastName)")
+                        
+                        Text(userData.email).hookedText(font: .title2)
                         TextField("First Name", text: $firstNameInput)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.horizontal, 8)
@@ -92,7 +91,10 @@ struct ProfileView: View {
         .sheet(isPresented: $showFriendsSheet) {
             FriendHubView()
         }
-        .background(ColorToken.backgroundPrimary.color)
+        .refreshable {
+            viewModel.refreshProfile()
+        }
+        .background(ColorToken.backgroundSecondary.color)
     }
 }
 
@@ -102,7 +104,7 @@ struct ProfileIconView: View {
 
     var body: some View {
         if let profileIconUrl = profileIconUrl, let url = URL(string: profileIconUrl) {
-            CachedAsyncImage(url: url) { phase in
+            AsyncImage(url: url) { phase in
                 switch phase {
                 case .empty:
                     // Placeholder while loading
@@ -118,7 +120,7 @@ struct ProfileIconView: View {
                         .scaledToFill()
                         .frame(width: size, height: size)
                         .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                        .overlay(Circle().stroke(ColorToken.buttonSecondary.color, lineWidth: 2))
 
                 case .failure(_):
                     // Error placeholder

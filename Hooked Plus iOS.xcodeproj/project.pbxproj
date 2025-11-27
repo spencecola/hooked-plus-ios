@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		806088DC2E74B76B006A85E5 /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 806088DB2E74B76B006A85E5 /* Swinject */; };
+		80D441702ED7B48000784C87 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 80D4416F2ED7B48000784C87 /* FirebaseMessaging */; };
 		80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E472E6BA14B0019A461 /* FirebaseCore */; };
 		80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E492E6BA1520019A461 /* FirebaseFirestore */; };
 		80EC4E5B2E6C90350019A461 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 80EC4E5A2E6C90350019A461 /* FirebaseAuth */; };
@@ -63,6 +64,7 @@
 			files = (
 				80EC4E742E6CF0130019A461 /* GoogleSignIn in Frameworks */,
 				80EC4E482E6BA14B0019A461 /* FirebaseCore in Frameworks */,
+				80D441702ED7B48000784C87 /* FirebaseMessaging in Frameworks */,
 				80EC4E6C2E6CC9680019A461 /* Alamofire in Frameworks */,
 				80EC4E5B2E6C90350019A461 /* FirebaseAuth in Frameworks */,
 				80EC4E4A2E6BA1520019A461 /* FirebaseFirestore in Frameworks */,
@@ -141,6 +143,7 @@
 				80EC4E6B2E6CC9680019A461 /* Alamofire */,
 				80EC4E732E6CF0130019A461 /* GoogleSignIn */,
 				806088DB2E74B76B006A85E5 /* Swinject */,
+				80D4416F2ED7B48000784C87 /* FirebaseMessaging */,
 			);
 			productName = "Hooked Plus iOS";
 			productReference = 80EC4E0A2E6B9A6E0019A461 /* Hooked Plus iOS.app */;
@@ -430,25 +433,32 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Hooked Plus iOS/Hooked Plus iOS.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6F8849TX88;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 46J64UZJLB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Hooked-Plus-iOS-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Hooked+";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Record short clips to share with friends";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow access to local server for debugging.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your app needs your location to provide navigation features.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone to record audio clips.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOS";
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hookedplus.ios.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -460,25 +470,32 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Hooked Plus iOS/Hooked Plus iOS.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6F8849TX88;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = 46J64UZJLB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Hooked-Plus-iOS-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Hooked+";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Record short clips to share with friends";
 				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Allow access to local server for debugging.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Your app needs your location to provide navigation features.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This app uses the microphone to record audio clips.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hookedplus.Hooked-Plus-iOS";
+				MARKETING_VERSION = 0.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hookedplus.ios.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -638,6 +655,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80EC4E362E6B9D990019A461 /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
+		};
+		80D4416F2ED7B48000784C87 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80EC4E342E6B9D090019A461 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
 		};
 		80EC4E472E6BA14B0019A461 /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;

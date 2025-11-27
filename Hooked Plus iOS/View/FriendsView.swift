@@ -34,7 +34,7 @@ struct FriendsView: View {
                     viewModel.resetAndFetch(query: "")
                 }
             }
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
             .snackBar(isPresented: $friendApproved, type: .success, message: "Friend request accepted.")
             .snackBar(isPresented: Binding(get: {
                 viewModel.state.errorMessage != nil
@@ -59,8 +59,11 @@ struct FriendsView: View {
         if viewModel.state.loading && viewModel.state.friends.isEmpty {
             ProgressView("Loading Friends…")
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-        } else {
+        } else if !viewModel.state.friends.isEmpty {
             friendsList
+        } else {
+            Text("Find and request friends")
+                .hookedText()
         }
     }
 
@@ -68,7 +71,7 @@ struct FriendsView: View {
         List {
             ForEach(viewModel.state.friends) { friend in
                 FriendRow(friend: friend)
-                .listRowBackground(ColorToken.backgroundPrimary.color)
+                .listRowBackground(ColorToken.backgroundSecondary.color)
                 .onAppear {
                     if friend == viewModel.state.friends.last {
                         viewModel.fetchNextPage(query: searchText)

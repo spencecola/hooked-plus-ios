@@ -36,15 +36,27 @@ class ProfileViewModel: ObservableObject {
         repository.put(data: userData)
     }
     
+    func refreshProfile() {
+        repository.refresh()
+    }
+    
     func setProfileIcon(selectedItem: PhotosPickerItem) async {
         do {
-            let profileIcon = try await UserService.uploadProfileIcon(selectedItem: selectedItem)
-            guard var userData = state.data else {
-                return
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                state = DataResult.loading(data: state.data)
             }
-            userData.profileIcon = profileIcon
-//            repository.put(data: userData)
+            
+            let updatedUser = try await UserService.uploadProfileIcon(selectedItem: selectedItem)
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                state = DataResult.success(data: updatedUser)
+            }
         } catch {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else { return }
+                state = DataResult.failure(data: state.data, error: error)
+            }
             print("Failed to upload profile icon: \(error)")
         }
     }

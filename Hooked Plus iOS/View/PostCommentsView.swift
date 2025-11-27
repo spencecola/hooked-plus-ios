@@ -153,14 +153,7 @@ private struct CommentRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
-                Circle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(width: 36, height: 36)
-                    .overlay(
-                        Text(String(comment.userId.prefix(2)).uppercased())
-                            .font(.caption).bold()
-                            .foregroundColor(.white)
-                    )
+                ProfileIconView(profileIconUrl: comment.user.profileIcon, size: 36)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(comment.user.firstName)

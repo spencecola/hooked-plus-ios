@@ -20,13 +20,13 @@ struct MyCatchesView: View {
             List {
                 if viewModel.state.myCatches.catches.isEmpty {
                     Text("You currently have recorded no catches")
-                        .hookedText(font: .title2)
-                        .listRowBackground(ColorToken.backgroundPrimary.color)
+                        .hookedText()
+                        .listRowBackground(ColorToken.backgroundSecondary.color)
                 }
                 
                 ForEach(viewModel.state.myCatches.catches) { item in
                     MyCatchView(item: item)
-                        .listRowBackground(ColorToken.backgroundPrimary.color)
+                        .listRowBackground(ColorToken.backgroundSecondary.color)
                 }
             }
             .listStyle(.plain) // Use plain style for minimal padding and full width
@@ -34,7 +34,7 @@ struct MyCatchesView: View {
             .refreshable {
                 viewModel.refreshMyCatches()
             }
-            .background(ColorToken.backgroundPrimary.color)
+            .background(ColorToken.backgroundSecondary.color)
         }
         .loading(isLoading: viewModel.state.loading)
         .snackBar(isPresented: Binding(get: {
@@ -56,13 +56,13 @@ struct MyCatchView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.species?.englishName ?? "")
                     .font(.title)
-                    .listRowBackground(Color(ColorToken.backgroundPrimary.color))
+                    .listRowBackground(Color(ColorToken.backgroundSecondary.color))
                 
                 // Time ago
                 if let createdAt = item.createdAt {
                     Text(timeAgo(from: createdAt))
                         .font(.title2)
-                        .listRowBackground(Color(ColorToken.backgroundPrimary.color))
+                        .listRowBackground(Color(ColorToken.backgroundSecondary.color))
                 }
                 
                 // Weather degrees when caught
