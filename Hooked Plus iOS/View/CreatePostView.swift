@@ -43,7 +43,7 @@ struct CreatePostView: View {
                 maxImages: maxImages,
                 viewModel: viewModel,
                 onCancel: { dismiss() },
-                onPost: {
+                onPost: { _ in
                     viewModel.createPost(
                         isCatch: isCatch,
                         description: description,
@@ -77,7 +77,20 @@ struct PostContentView: View {
     let maxImages: Int
     let viewModel: FeedViewModel
     let onCancel: () -> Void
-    let onPost: () -> Void
+    let onPost: (Bool) -> Void // Bool represents submit for review
+    
+    
+    // Computed property to safely parse the weight string
+    private var parsedWeight: Double? {
+        // Use a NumberFormatter for localized decimal parsing or a simple Double() conversion
+        Double(weight.trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+    
+    // Check if the parsed weight is 5.0 or greater
+    private var isLunker: Bool {
+        guard let w = parsedWeight else { return false }
+        return w >= 5.0
+    }
     
     var body: some View {
         ScrollView {
@@ -103,7 +116,12 @@ struct PostContentView: View {
                 // Conditionally show views based on isCatch
                 if isCatch {
                     WeatherView(weather: viewModel.state.currentWeather)
-                    LocationView(location: viewModel.state.currentLocation, authStatus: viewModel.state.locationAuthorization, onRequestLocationPermission: viewModel.onRequestLocationPermission)
+                    LocationView(
+                        depth: $depth,
+                        weight: $weight,
+                        location: viewModel.state.currentLocation,
+                        authStatus: viewModel.state.locationAuthorization,
+                        onRequestLocationPermission: viewModel.onRequestLocationPermission)
                     
                     SelectedSpeciesView(showSelectSpeciesView: $showingSpeciesSearch, selectedSpecies: $selectedSpecies)
                 }
@@ -114,8 +132,15 @@ struct PostContentView: View {
                     Button("Cancel", action: onCancel)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Post", action: onPost)
-                        .disabled(description.isEmpty || isUploading)
+                    Button("Post", action: {
+                        if isLunker {
+                            dismissKeyboard()
+                            showLunkerConfirmation = true
+                        } else {
+                            onPost(false)
+                        }
+                    })
+                    .disabled(description.isEmpty || isUploading)
                 }
             }
             .onChange(of: selectedItems) { newItems in
@@ -148,12 +173,68 @@ struct PostContentView: View {
                 .background(ColorToken.backgroundSecondary.color)
             }
             .sheet(isPresented: $showLunkerConfirmation) {
-                SheetView {
-                    
+                HalfSheetView {
+                    VStack(alignment: .center, spacing: 10) {
+                        Text("Submit for review to be officially recognized")
+                            .hookedText(font: .title2)
+                        
+                        ScrollView {
+                            HStack(spacing: 10) {
+                                buildImage("https://texassharelunker.com/media/images/SL_-_Required_Photo_1.width-500.jpg")
+                                
+                                buildImage("https://texassharelunker.com/media/images/SL_-_Required_Photo_2.width-500.jpg")
+                                
+                                buildImage("https://texassharelunker.com/media/images/SL_-_Optional_Photo_3.width-500.jpg")
+                            }.frame(height: 140)
+                        }
+                        
+                        // TODO: add pictures and scrolling HStack to show photo angles
+                        Spacer()
+                        
+                        Button("Post for Review") {
+                            onPost(true)
+                        }
+                        .buttonStyle(PrimaryButtonStyle())
+                        
+                        Button("Post Without Review") {
+                            onPost(false)
+                        }
+                        .buttonStyle(OutlineButtonStyle())
+                    }
+                    .padding(16)
                 }
             }
             .loading(isLoading: viewModel.state.loading)
             .background(ColorToken.backgroundSecondary.color)
+        }
+    }
+    
+    @ViewBuilder
+    func buildImage(_ url: String) -> some View {
+        GeometryReader { geo in
+            CachedAsyncImage(url: URL(string: url)) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .clipped()
+                    
+                case .failure(_):
+                    Color.gray
+                        .overlay(
+                            Image(systemName: "photo.fill")
+                                .font(.title)
+                                .foregroundColor(.white)
+                        )
+                    
+                case .empty:
+                    // Keeps same layout even before loading
+                    Color.gray
+                        .overlay(ProgressView())
+                }
+            }
         }
     }
 }
@@ -230,17 +311,29 @@ struct WeatherView: View {
     }
 }
 
-// Extracted location map view
 struct LocationView: View {
     @State private var placeName: String = "Fetching location..."
-    @State private var depth: String = ""
-    @State private var weight: String = ""
     @State private var isRequestingPermission = false
+    
+    // Bindings from parent PostContentView
+    @Binding var depth: String
+    @Binding var weight: String
+    
+    // Data passed from parent
     let location: CLLocation?
     let authStatus: CLAuthorizationStatus?
     var onRequestLocationPermission: () -> Void
     
-    // MARK: - Authorization Actions
+    // MARK: - Initializer (For clarity, though not strictly required in modern SwiftUI)
+    init(depth: Binding<String>, weight: Binding<String>, location: CLLocation?, authStatus: CLAuthorizationStatus?, onRequestLocationPermission: @escaping () -> Void) {
+        _depth = depth
+        _weight = weight
+        self.location = location
+        self.authStatus = authStatus
+        self.onRequestLocationPermission = onRequestLocationPermission
+    }
+    
+    // MARK: - Authorization Computed Properties
     private var shouldRequestPermission: Bool {
         authStatus == .notDetermined
     }
@@ -251,29 +344,29 @@ struct LocationView: View {
     
     private var authorizationMessage: String {
         switch authStatus {
-        case .notDetermined:
-            return "Tap to enable location"
-        case .denied, .restricted:
-            return "Location access denied"
-        case .authorizedWhenInUse, .authorizedAlways:
-            return "Fetching location..."
-        default:
-            return "Location unavailable"
+        case .notDetermined: return "Tap to enable location"
+        case .denied, .restricted: return "Location access denied"
+        case .authorizedWhenInUse, .authorizedAlways: return "Fetching location..."
+        default: return "Location unavailable"
         }
     }
     
     // MARK: - Body
     var body: some View {
-        HStack {
-            locationContent
-            VStack(alignment: .leading) {
-                locationInfo
-                TextField("Depth in feet", text: $depth)
-                    .keyboardType(.decimalPad)
-                    .textContentType(.none)
-                TextField("Weight in pounds", text: $weight)
-                    .keyboardType(.decimalPad)
-                    .textContentType(.none)
+        VStack(alignment: .leading, spacing: 10) {
+            
+            // Map, Depth, and Weight Input Fields
+            HStack {
+                locationContent
+                VStack(alignment: .leading) {
+                    locationInfo
+                    TextField("Depth in feet", text: $depth)
+                        .keyboardType(.decimalPad)
+                        .textContentType(.none)
+                    TextField("Weight in pounds", text: $weight)
+                        .keyboardType(.decimalPad)
+                        .textContentType(.none)
+                }
             }
         }
         .onAppear {

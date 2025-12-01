@@ -23,7 +23,8 @@ enum SnackBarType {
 struct SnackBar: View {
     let message: String
     let type: SnackBarType
-    var duration: TimeInterval = 2.5
+    var duration: TimeInterval
+    var autoDismiss: Bool
     @Binding var isShowing: Bool
     
     var body: some View {
@@ -48,10 +49,12 @@ struct SnackBar: View {
                 .padding(.horizontal, 24)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 .onAppear {
-                    // Auto-dismiss after duration
-                    DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-                        withAnimation {
-                            isShowing = false
+                    // Auto-dismiss logic based on autoDismiss flag
+                    if autoDismiss {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                            withAnimation {
+                                isShowing = false
+                            }
                         }
                     }
                 }
@@ -66,11 +69,12 @@ extension View {
         isPresented: Binding<Bool>,
         type: SnackBarType,
         message: String,
-        duration: TimeInterval = 2.5
+        duration: TimeInterval = 2.5,
+        autoDismiss: Bool = true
     ) -> some View {
         ZStack {
             self
-            SnackBar(message: message, type: type, duration: duration, isShowing: isPresented)
+            SnackBar(message: message, type: type, duration: duration, autoDismiss: autoDismiss, isShowing: isPresented)
         }
     }
 }

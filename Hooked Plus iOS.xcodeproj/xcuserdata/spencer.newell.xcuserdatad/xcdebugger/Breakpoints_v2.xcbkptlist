@@ -18,6 +18,36 @@
             endingLineNumber = "51"
             landmarkName = "getAllSpecies(query:page:limit:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "AF87E039-9136-47D0-BE8D-C6F98F619487 - 37a81971cf9f8613"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static Hooked_Plus_iOS.SpeciesService.getAllSpecies(query: Swift.String, page: Swift.Int, limit: Swift.Int) async throws -&gt; Hooked_Plus_iOS.SpeciesResponse"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/SpeciesService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51">
+               </Location>
+               <Location
+                  uuid = "AF87E039-9136-47D0-BE8D-C6F98F619487 - 37a81971cf9f8613"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for static Hooked_Plus_iOS.SpeciesService.getAllSpecies(query: Swift.String, page: Swift.Int, limit: Swift.Int) async throws -&gt; Hooked_Plus_iOS.SpeciesResponse"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/SpeciesService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "51"
+                  endingLineNumber = "51">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -34,6 +64,36 @@
             endingLineNumber = "82"
             landmarkName = "getAllSpecies(query:page:limit:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E8ABF216-8568-4665-8FD0-66F0270F2C5D - d88a53f5a6e67278"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.SpeciesService.getAllSpecies(query: Swift.String, page: Swift.Int, limit: Swift.Int) async throws -&gt; Hooked_Plus_iOS.SpeciesResponse"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/SpeciesService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82">
+               </Location>
+               <Location
+                  uuid = "E8ABF216-8568-4665-8FD0-66F0270F2C5D - d88a53f5a6e67278"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.SpeciesService.getAllSpecies(query: Swift.String, page: Swift.Int, limit: Swift.Int) async throws -&gt; Hooked_Plus_iOS.SpeciesResponse"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/SpeciesService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "82"
+                  endingLineNumber = "82">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -66,6 +126,36 @@
             endingLineNumber = "103"
             landmarkName = "createComment(postId:content:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "00E9046A-7CAA-4A85-8320-646B2F36D96C - fe4eea4980dc21f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.createComment(postId: Swift.String, content: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103">
+               </Location>
+               <Location
+                  uuid = "00E9046A-7CAA-4A85-8320-646B2F36D96C - fe4eea4980dc21f7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.createComment(postId: Swift.String, content: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -82,6 +172,36 @@
             endingLineNumber = "97"
             landmarkName = "createComment(postId:content:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E39D912B-1613-4EC7-A06B-F710E2B6435E - fe4eea4980dc2609"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.createComment(postId: Swift.String, content: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97">
+               </Location>
+               <Location
+                  uuid = "E39D912B-1613-4EC7-A06B-F710E2B6435E - fe4eea4980dc2609"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.createComment(postId: Swift.String, content: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "97"
+                  endingLineNumber = "97">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -98,6 +218,36 @@
             endingLineNumber = "95"
             landmarkName = "createComment(postId:content:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "97C3D9CF-AF26-42B3-AD50-2D8D6D574CE1 - fe4eea4980dc26cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.createComment(postId: Swift.String, content: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95">
+               </Location>
+               <Location
+                  uuid = "97C3D9CF-AF26-42B3-AD50-2D8D6D574CE1 - fe4eea4980dc26cf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.createComment(postId: Swift.String, content: Swift.String) async throws -&gt; ()"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "95"
+                  endingLineNumber = "95">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -114,6 +264,36 @@
             endingLineNumber = "205"
             landmarkName = "getComments(for:page:limit:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "1C37E0F5-BFE4-476A-90A9-431507CEF009 - c32641b9db3ee00"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.getComments(for: Swift.String, page: Swift.Int, limit: Swift.Int) async throws -&gt; Hooked_Plus_iOS.CommentsResponse"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205">
+               </Location>
+               <Location
+                  uuid = "1C37E0F5-BFE4-476A-90A9-431507CEF009 - c32641b9db3ee00"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(5) suspend resume partial function for static Hooked_Plus_iOS.CommentService.getComments(for: Swift.String, page: Swift.Int, limit: Swift.Int) async throws -&gt; Hooked_Plus_iOS.CommentsResponse"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/CommentService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "205"
+                  endingLineNumber = "205">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -130,22 +310,36 @@
             endingLineNumber = "89"
             landmarkName = "fetchFriendStories()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BD848DD5-4564-433C-9A93-D2A36840A639"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Hooked Plus iOS/Hooked_Plus_iOSApp.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
-            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7AC4E8D3-969C-439F-B3DC-1DB92A3A429B - da4a0129caa50355"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static Hooked_Plus_iOS.StoryService.fetchFriendStories() async throws -&gt; Swift.Array&lt;Hooked_Plus_iOS.FriendStoriesData&gt;"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/StoryService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89">
+               </Location>
+               <Location
+                  uuid = "7AC4E8D3-969C-439F-B3DC-1DB92A3A429B - da4a0129caa50355"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(3) suspend resume partial function for static Hooked_Plus_iOS.StoryService.fetchFriendStories() async throws -&gt; Swift.Array&lt;Hooked_Plus_iOS.FriendStoriesData&gt;"
+                  moduleName = "Hooked Plus iOS.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spencer.newell/Development/hooked-plus-ios/Hooked%20Plus%20iOS/Hooked%20Plus%20iOS/Model/Services/StoryService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "89"
+                  endingLineNumber = "89">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
