@@ -32,6 +32,6 @@ struct HalfSheetView<Content: View>: View {
         .presentationDragIndicator(.visible)
         
         // Optional: Allows the background to be interactive when the sheet is at the medium detent.
-        .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+//        .presentationBackgroundInteraction(.enabled(upThrough: .medium))
     }
 }

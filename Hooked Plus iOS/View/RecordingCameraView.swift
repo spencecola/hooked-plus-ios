@@ -302,12 +302,21 @@ class CameraManager: NSObject, ObservableObject {
     }
 
     // MARK: - 2. startRunning ONLY on serial queue
-    private func startSession() {
+    func startSession() {
         sessionQueue.async {
             guard !self.session.isRunning else { return }
             self.session.startRunning()
             debugPrint("Session is RUNNING!")
             debugPrint("Starting session... \(Thread.isMainThread ? "on main" : "on background")")
+        }
+    }
+    
+    func stopSession() {
+        sessionQueue.async {
+            guard self.session.isRunning else { return }
+            self.session.stopRunning()
+            debugPrint("Session STOPPED!")
+            debugPrint("Stopping session... \(Thread.isMainThread ? "on main" : "on background")")
         }
     }
     

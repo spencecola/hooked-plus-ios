@@ -24,7 +24,11 @@ class UserRepository: Repository {
         }
         
         // update the firestore user's document
-        db.collection("users").document(user.uid).setData(data.toDictionary())
+        db.collection("users").document(user.uid).setData(data.toDictionary(), merge: true) { error in
+            if let error = error {
+                print("Error setting user document with merge: \(error)")
+            }
+        }
     }
     
     func refresh() {

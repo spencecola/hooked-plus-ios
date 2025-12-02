@@ -147,11 +147,11 @@ private struct CommentsModal: View {
             PostCommentsView(postId: postId)
 //                .navigationTitle("Comments")
 //                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("Done") { dismiss() }
-                    }
-                }
+//                .toolbar {
+//                    ToolbarItem(placement: .navigationBarTrailing) {
+//                        Button("Done") { dismiss() }
+//                    }
+//                }
                 .onReceive(NotificationCenter.default.publisher(for: .commentCountDidChange)) { notification in
                     if let count = notification.object as? Int {
                         commentCount = count

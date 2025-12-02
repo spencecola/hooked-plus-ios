@@ -78,8 +78,8 @@ struct StoriesView: View {
     private func friendBubble(_ friend: FriendStoriesData) -> some View {
         VStack(spacing: verticalSpacing) {
             // Use the *first* story as thumbnail (fallback to placeholder)
-            let profileIcon = friend.profileIcon ?? "https://i.pravatar.cc/150?img=5"
-            if let iconUrl = URL(string: profileIcon) {
+         
+            if let profileIcon = friend.profileIcon, let iconUrl = URL(string: profileIcon) {
                 AsyncImage(url: iconUrl) { phase in
                     if let image = phase.image {
                         image
@@ -102,6 +102,24 @@ struct StoriesView: View {
                         startFriendId: friend.friendId
                     )
                 }
+            } else {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: circleSize, height: circleSize) // Use defined size
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle()
+                            .stroke(ringColor, lineWidth: 3)
+                            .padding(-2)
+                    )
+                    .foregroundColor(.gray)
+                    .onTapGesture {
+                        presentedViewer = StoriesViewerModel(
+                            allFriends: friendStories,
+                            startFriendId: friend.friendId
+                        )
+                    }
             }
             
             // Friend name
@@ -203,7 +221,10 @@ private struct StoriesViewer: View {
     private func profileInfoRow(data: FriendStoriesData) -> some View {
         HStack {
             ProfileIconView(profileIconUrl: data.profileIcon, size: 36)
-            Text("\(data.firstName) \(data.lastName)").foregroundColor(.white)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("\(data.firstName) \(data.lastName)").hookedText()
+                Text(data.handleName).hookedText(font: .caption, color: ColorToken.textTertiary.color)
+            }
         }
     }
     

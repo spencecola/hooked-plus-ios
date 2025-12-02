@@ -11,6 +11,7 @@ struct ProfileView: View {
     @State private var showFriendsSheet: Bool = false
     @State private var selectedPhotoItem: PhotosPickerItem? = nil
     
+    
     init(viewModel: ProfileViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
@@ -45,25 +46,15 @@ struct ProfileView: View {
                         
                         Text(userData.email).hookedText(font: .title2)
                         
-                        Text(userData.handleName).hookedText(font: .caption, color: ColorToken.textTertiary.color).padding(.horizontal, 8)
-                        
-                        TextField("First Name", text: $firstNameInput)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .padding(.horizontal, 8)
-                            .onChange(of: firstNameInput) { newValue in
-                                viewModel.setFirstName(firstName: newValue)
-                            }
-                        
-                        TextField("Last Name", text: $lastNameInput)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .padding(.horizontal, 8)
-                            .onChange(of: lastNameInput) { newValue in
-                                viewModel.setLastName(lastName: newValue)
-                            }
+                        Text(userData.handleName).hookedText(color: ColorToken.textTertiary.color).padding(.horizontal, 8)
+                    
                     }
                 }
                 
                 VStack(spacing: 16) {
+                    
+                    buildNameCard()
+                    
                     // Find friends
                     Button("Find Friends") {
                         showFindFriendsSheet = true
@@ -82,10 +73,17 @@ struct ProfileView: View {
                 }
             }
         }
-        .onAppear {
-            if case .success(let userData) = viewModel.state {
-                firstNameInput = userData.firstName
-                lastNameInput = userData.lastName
+        .onChange(of: viewModel.state.data) { newUserData in
+            // Check if the new data is successful and present
+            if let userData = newUserData {
+                // Only update the local @State if the values are different
+                // to prevent potential infinite loops or unnecessary view updates.
+                if firstNameInput != userData.firstName {
+                    firstNameInput = userData.firstName
+                }
+                if lastNameInput != userData.lastName {
+                    lastNameInput = userData.lastName
+                }
             }
         }
         .loading(isLoading: viewModel.state.isLoading())
@@ -99,6 +97,38 @@ struct ProfileView: View {
             viewModel.refreshProfile()
         }
         .background(ColorToken.backgroundSecondary.color)
+    }
+    
+    @ViewBuilder
+    func buildNameCard() -> some View {
+        // Use a ZStack or simply apply modifiers to the container (VStack)
+        // to create the card effect.
+        VStack(spacing: 12) {
+            // --- First Name Field ---
+            TextField("First Name", text: $firstNameInput)
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(.horizontal, 8) // Inner padding for the text itself
+                .onChange(of: firstNameInput) { newValue in
+                    viewModel.setFirstName(firstName: newValue)
+                }
+            
+            // Optional: A divider for better visual separation
+            Divider()
+            
+            // --- Last Name Field ---
+            TextField("Last Name", text: $lastNameInput)
+                .textFieldStyle(PlainTextFieldStyle())
+                .padding(.horizontal, 8) // Inner padding for the text itself
+                .onChange(of: lastNameInput) { newValue in
+                    viewModel.setLastName(lastName: newValue)
+                }
+        }
+        // --- Card Modifiers (Applied to the whole VStack) ---
+        .padding(16) // Padding inside the card content
+        .background(ColorToken.backgroundPrimary.color) // The card's background color
+        .cornerRadius(10) // Rounded corners for the card
+        .shadow(color: .black.opacity(0.1), radius: 5, x: 0, y: 2) // Subtle shadow
+        .padding(.horizontal)
     }
 }
 

@@ -20,6 +20,7 @@ struct FriendStoriesData: Decodable, Identifiable {
     let friendId: String
     let firstName: String
     let lastName: String
+    let handleName: String
     let profileIcon: String?
     let stories: [StoryData]
 }

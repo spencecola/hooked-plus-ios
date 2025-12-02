@@ -40,10 +40,22 @@ struct RecordingOverlayContainer<Content: View>: View {
                 }
             })
             
+            .onChange(of: isRecordingShown) { oldValue, newValue in
+                let cameraManager = HookedAssembly.resolver.resolve(CameraManager.self)
+                            if newValue {
+                                // Camera is shown: Start the camera session
+                                cameraManager?.checkPermission()
+                                cameraManager?.startSession()
+                            } else {
+                                // Camera is hidden: Stop the camera session
+                                cameraManager?.stopSession()
+                            }
+                        }
+            
             // MARK: - FOREGROUND CONTENT (e.g., Tab Bar View)
             content()
                 // Inject the closure into the environment for the content to use
-                .environment(\.addStoryAction, showCamera) // <-- NEW: Allows content to call showCamera()
+                .environment(\.addStoryAction, showCamera)
                 .offset(x: dragOffset)
                 .animation(.spring(response: 0.35, dampingFraction: 0.85), value: dragOffset)
         }
