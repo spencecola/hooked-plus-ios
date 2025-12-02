@@ -4,6 +4,7 @@ import PhotosUI
 
 struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel
+    @State private var handleNameInput: String = ""
     @State private var firstNameInput: String = ""
     @State private var lastNameInput: String = ""
     @State private var showFindFriendsSheet: Bool = false
@@ -43,6 +44,9 @@ struct ProfileView: View {
                         .padding(16)
                         
                         Text(userData.email).hookedText(font: .title2)
+                        
+                        Text(userData.handleName).hookedText(font: .caption, color: ColorToken.textTertiary.color).padding(.horizontal, 8)
+                        
                         TextField("First Name", text: $firstNameInput)
                             .textFieldStyle(PlainTextFieldStyle())
                             .padding(.horizontal, 8)

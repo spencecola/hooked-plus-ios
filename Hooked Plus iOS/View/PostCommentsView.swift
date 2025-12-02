@@ -50,8 +50,8 @@ struct PostCommentsView: View {
             // MARK: - New Comment Input
             commentInput
         }
-        .navigationTitle("Comments")
-        .navigationBarTitleDisplayMode(.inline)
+//        .navigationTitle("Comments")
+//        .navigationBarTitleDisplayMode(.inline)
         .task { await vm.loadComments() }
         .refreshable { await vm.loadComments() }
         .overlay {
@@ -158,6 +158,7 @@ private struct CommentRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(comment.user.firstName)
                         .font(.subheadline).bold()
+                    Text(comment.user.handleName).hookedText(font: .caption2, color: .gray)
                     if let createdAt = comment.createdAt {
                         Text(relativeTime(createdAt))
                             .font(.caption)

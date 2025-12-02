@@ -5,6 +5,7 @@ import FirebaseAuth
 // Main Login View
 struct LoginView: View {
     @StateObject private var authManager = AuthManager()
+    @State private var handleName = ""
     @State private var email = ""
     @State private var password = ""
     @State private var firstName = ""
@@ -36,6 +37,7 @@ struct LoginView: View {
                 )
             case .signUp:
                 SignUpView(
+                    handleName: $handleName,
                     firstName: $firstName,
                     lastName: $lastName,
                     email: $email,
@@ -77,6 +79,7 @@ struct LoginView: View {
 
 // Sign Up View
 struct SignUpView: View {
+    @Binding var handleName: String
     @Binding var firstName: String
     @Binding var lastName: String
     @Binding var email: String
@@ -110,6 +113,9 @@ struct SignUpView: View {
                 .font(.title2)
                 .fontWeight(.semibold)
 
+            TextField("Handle Name (ex. thefishman34)", text: $handleName)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal)
             TextField("First Name", text: $firstName)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.horizontal)
@@ -123,12 +129,12 @@ struct SignUpView: View {
             
             GoogleSignInButton(
                 action: {
-                    if firstName.isEmpty || lastName.isEmpty {
-                        errorMessage = "Please enter your first and last name."
+                    if handleName.isEmpty || firstName.isEmpty || lastName.isEmpty {
+                        errorMessage = "Please enter your handle name, first and last name."
                     } else {
                         Task {
                             do {
-                                try await authManager.signUpWithGoogle(firstName: firstName, lastName: lastName)
+                                try await authManager.signUpWithGoogle(handleName: handleName, firstName: firstName, lastName: lastName)
                                 errorMessage = nil
                                 onSignUp()
                             } catch {
@@ -140,8 +146,8 @@ struct SignUpView: View {
             )
             
             Button("Sign Up with Email") {
-                if firstName.isEmpty || lastName.isEmpty {
-                    errorMessage = "Please enter your first and last name."
+                if handleName.isEmpty || firstName.isEmpty || lastName.isEmpty {
+                    errorMessage = "Please enter your handle name, first and last name."
                 } else {
                     showEmailFields = true
                 }
@@ -164,12 +170,12 @@ struct SignUpView: View {
                 .textFieldStyle(RoundedBorderTextFieldStyle())
 
             Button("Complete Sign Up") {
-                if email.isEmpty || password.isEmpty {
-                    errorMessage = "Please enter your email and password."
+                if handleName.isEmpty || email.isEmpty || password.isEmpty {
+                    errorMessage = "Please enter your handle name, email and password."
                 } else {
                     Task {
                         do {
-                            try await authManager.signUp(email: email, password: password, firstName: firstName, lastName: lastName)
+                            try await authManager.signUp(handleName: handleName, email: email, password: password, firstName: firstName, lastName: lastName)
                             errorMessage = nil
                             onSignUp()
                         } catch {

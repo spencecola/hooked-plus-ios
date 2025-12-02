@@ -10,12 +10,12 @@ import FirebaseFirestore
 
 extension AuthManager {
     /// creates a new user given a user authenticated
-    func createUserDocument(user: User, firstName: String, lastName: String) async throws {
+    func createUserDocument(user: User, handleName: String, firstName: String, lastName: String) async throws {
         guard let email = user.email else {
             throw UserError.missingEmail
         }
         
-        let created = try await UserService.createUser(email: email, firstName: firstName, lastName: lastName, interests: [])
+        let created = try await UserService.createUser(handleName: handleName, email: email, firstName: firstName, lastName: lastName, interests: [])
         if !created {
             throw UserError.failedToCreate
         }

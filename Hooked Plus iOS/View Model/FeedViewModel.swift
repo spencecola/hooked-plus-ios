@@ -96,32 +96,49 @@ class FeedViewModel: ObservableObject {
         }
     }
     
-    func createPost(isCatch: Bool, description: String, tags: [String] = [], photos: [PhotosPickerItem], species: SpeciesData? = nil, depth: String? = nil, weight: String? = nil) {
-        Task {
-            
-            defer {
-                state.loading = false
-            }
-            
-            state.loading = true
-            do {
-                try await FeedService.uploadPost(
-                    isCatch: isCatch,
-                    description: description,
-                    weight: weight,
-                    depth: depth,
-                    species: species,
-                    tags: tags,
-                    selectedItems: photos,
-                    locationManager: locationManager
-                )
-                
-                state.postCreated = true
-            } catch {
-                debugPrint("failed to create post \(error)")
-                state.errorMessage = "Failed to create post at this time. Please try again."
-            }
+    func createPost(isCatch: Bool, description: String, tags: [String] = [], photos: [PhotosPickerItem], species: SpeciesData? = nil, depth: String? = nil, weight: String? = nil, isLunker: Bool = false) async  -> Bool {
+        
+        // validate data used in create post
+        if isCatch, weight?.isNotEmpty != true {
+            state.errorMessage = "Woops! Please enter a catch weight and try again."
+            return false
         }
+        
+        if isCatch, species == nil {
+            state.errorMessage = "Woops! Please select a species for your catch and try again."
+            return false
+        }
+        
+        if isCatch, isLunker, photos.count < 3 {
+            state.errorMessage = "Woops! Please make sure to add the required images needed for our team to review your catch."
+            return false
+        }
+        
+        defer {
+            state.loading = false
+        }
+        
+        state.loading = true
+        do {
+            try await FeedService.uploadPost(
+                isCatch: isCatch,
+                description: description,
+                weight: weight,
+                depth: depth,
+                isLunker: isLunker,
+                species: species,
+                tags: tags,
+                selectedItems: photos,
+                locationManager: locationManager
+            )
+            
+            state.postCreated = true
+        } catch {
+            debugPrint("failed to create post \(error)")
+            state.errorMessage = "Failed to create post at this time. Please try again."
+            return false
+        }
+        return true
     }
     
     func likePost(postId: String) {

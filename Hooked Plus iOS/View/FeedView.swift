@@ -28,7 +28,11 @@ struct FeedView: View {
         .snackBar(
             isPresented: Binding(
                 get: { viewModel.state.errorMessage != nil },
-                set: { _ in }
+                set: { shouldShow in
+                    if !shouldShow {
+                        viewModel.state.errorMessage = nil
+                    }
+                }
             ),
             type: .error,
             message: viewModel.state.errorMessage ?? "Something went wrong. Please try again later."
@@ -104,6 +108,7 @@ private struct FeedPostRow: View {
     var body: some View {
         PostView(
             postId: item.id,
+            handleName: item.handleName ?? "",
             firstName: item.firstName ?? "",
             lastName: item.lastName ?? "",
             profileIcon: item.profileIcon,

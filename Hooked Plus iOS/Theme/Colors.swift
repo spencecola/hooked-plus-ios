@@ -15,6 +15,7 @@ enum ColorToken {
     case buttonDanger
     case textPrimary
     case textSecondary
+    case textTertiary
     case darkGray
     case lightGray
     case backgroundPrimary
@@ -34,6 +35,8 @@ enum ColorToken {
             return Color(hex: "#000000") | Color(hex: "#FFFFFF") // white for dark mode
         case .textSecondary:
             return Color(hex: "#1C1C1C") | Color(hex: "#E5E5E5") // white for dark mode
+        case .textTertiary:
+            return Color(hex: "#EF7F18") | Color(hex: "#108080") // Muted teal for dark mode
         case .darkGray:
             return Color(hex: "#1B1A1D") | Color(hex: "#F9F9FA") // Light gray for dark mode
         case .lightGray:

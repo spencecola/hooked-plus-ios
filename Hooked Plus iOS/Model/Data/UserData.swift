@@ -7,6 +7,7 @@
 
 struct UserData: Codable, Equatable, Identifiable {
     var id: String  // Keep Identifiable
+    var handleName: String
     var firstName: String
     var lastName: String
     var email: String
@@ -19,6 +20,7 @@ struct UserData: Codable, Equatable, Identifiable {
         }
         
         self.id = id
+        self.handleName = dictionary["handleName"] as? String ?? ""
         self.firstName = dictionary["firstName"] as? String ?? ""
         self.lastName = dictionary["lastName"] as? String ?? ""
         self.email = dictionary["email"] as? String ?? ""
@@ -30,6 +32,7 @@ struct UserData: Codable, Equatable, Identifiable {
 extension UserData {
     func toDictionary() -> [String : Any] {
         var dict: [String: Any] = [
+            "handleName": handleName,
             "firstName": firstName,
             "lastName": lastName,
             "email": email

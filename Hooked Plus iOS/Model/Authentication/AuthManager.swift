@@ -21,8 +21,8 @@ protocol AuthManagable {
     var state: AuthState { get }
     var statePublisher: AnyPublisher<AuthState, Never> { get }
     func signInWithGoogle() async throws
-    func signUpWithGoogle(firstName: String, lastName: String) async throws
-    func signUp(email: String, password: String, firstName: String, lastName: String) async throws
+    func signUpWithGoogle(handleName: String, firstName: String, lastName: String) async throws
+    func signUp(handleName: String, email: String, password: String, firstName: String, lastName: String) async throws
     func signIn(email: String, password: String) async throws
     func signOut()
 }
@@ -85,7 +85,7 @@ class AuthManager: AuthManagable, ObservableObject {
             // Example: await UserService.createUser(email: user.profile?.email ?? "", firstName: user.profile?.givenName ?? "", lastName: user.profile?.familyName ?? "", interests: [])
         }
 
-    func signUpWithGoogle(firstName: String, lastName: String) async throws {
+    func signUpWithGoogle(handleName: String, firstName: String, lastName: String) async throws {
             guard let clientID = FirebaseApp.app()?.options.clientID else {
                 throw URLError(.badServerResponse)
             }
@@ -112,7 +112,7 @@ class AuthManager: AuthManagable, ObservableObject {
             do {
                 let result = try await Auth.auth().signIn(with: credential)
                 do {
-                    try await createUserDocument(user: result.user, firstName: firstName, lastName: lastName)
+                    try await createUserDocument(user: result.user, handleName: handleName, firstName: firstName, lastName: lastName)
                 } catch {
                     // if we fail to create a user document, delete the new user auth account
                     try await Auth.auth().currentUser?.delete()
@@ -127,11 +127,11 @@ class AuthManager: AuthManagable, ObservableObject {
             // Example: await UserService.createUser(email: user.profile?.email ?? "", firstName: user.profile?.givenName ?? "", lastName: user.profile?.familyName ?? "", interests: [])
         }
 
-    func signUp(email: String, password: String, firstName: String, lastName: String) async throws {
+    func signUp(handleName: String, email: String, password: String, firstName: String, lastName: String) async throws {
         do {
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             do {
-                try await createUserDocument(user: result.user, firstName: firstName, lastName: lastName)
+                try await createUserDocument(user: result.user, handleName: handleName, firstName: firstName, lastName: lastName)
             } catch {
                 // if we fail to create a user document, delete the new user auth account
                 try await Auth.auth().currentUser?.delete()

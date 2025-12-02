@@ -14,6 +14,7 @@ struct FeedItemContentData: Codable {
 struct FeedItemData: Codable, Identifiable {
     var id: String
     var timestamp: Date?
+    var handleName: String?
     var firstName: String?
     var lastName: String?
     var profileIcon: String?

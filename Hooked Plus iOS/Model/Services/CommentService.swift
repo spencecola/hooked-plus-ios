@@ -38,6 +38,7 @@ struct Comment: Codable, Identifiable {
 struct CommentUser: Codable {
     let firstName: String
     let lastName: String
+    let handleName: String
     let profileIcon: String?
 }
 

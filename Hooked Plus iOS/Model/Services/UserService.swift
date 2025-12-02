@@ -14,7 +14,7 @@ enum UserError: Error {
 }
 
 enum UserService {
-    static func createUser(email: String, firstName: String, lastName: String, interests: [String]) async throws -> Bool {
+    static func createUser(handleName: String, email: String, firstName: String, lastName: String, interests: [String]) async throws -> Bool {
         guard let user = Auth.auth().currentUser else {
             throw URLError(.userAuthenticationRequired) // Handle unauthenticated user
         }
@@ -34,6 +34,7 @@ enum UserService {
         // Request body
         let parameters: [String: Any] = [
             "email": email,
+            "handleName": handleName,
             "firstName": firstName,
             "lastName": lastName,
             "interests": interests

@@ -13,7 +13,7 @@ enum PostUploadError: Error {
 }
 
 enum FeedService {
-    static func uploadPost(isCatch: Bool = false, description: String?, weight: String? = nil, depth: String? = nil, species: SpeciesData? = nil, tags: [String] = [], selectedItems: [PhotosPickerItem] = [], locationManager: LocationManager = LocationManager()) async throws {
+    static func uploadPost(isCatch: Bool = false, description: String?, weight: String? = nil, depth: String? = nil, isLunker: Bool = false, species: SpeciesData? = nil, tags: [String] = [], selectedItems: [PhotosPickerItem] = [], locationManager: LocationManager = LocationManager()) async throws {
         
         guard let user = Auth.auth().currentUser else {
             throw PostUploadError.authenticationFailed
@@ -69,6 +69,10 @@ enum FeedService {
             AF.upload(multipartFormData: { multipartFormData in
                 if let isCatchData = "\(isCatch)".data(using: .utf8) {
                     multipartFormData.append(isCatchData, withName: "isCatch")
+                }
+                
+                if let isLunkerData = "\(isLunker)".data(using: .utf8) {
+                    multipartFormData.append(isLunkerData, withName: "isLunker")
                 }
                 
                 if let species, let speciesNameData = species.englishName.data(using: .utf8) {

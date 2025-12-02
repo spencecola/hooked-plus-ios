@@ -6,7 +6,8 @@
 import SwiftUI
 
 struct PostView: View {
-    let postId: String                 // ← ADD THIS
+    let postId: String
+    let handleName: String
     let firstName: String
     let lastName: String
     let profileIcon: String?
@@ -50,9 +51,19 @@ struct PostView: View {
                     }
                 }
                 
-                // Name
-                Text("\(firstName) \(lastName)")
-                    .font(.headline)
+                // if handle name exists on post, display under name
+                if handleName.isNotEmpty {
+                    VStack(alignment: .leading) {
+                        Text("\(firstName) \(lastName)")
+                            .hookedText(font: .headline)
+                        
+                        // Handle name
+                        Text("@\(handleName)").hookedText(font: .caption2, color: .gray)
+                    }
+                } else {
+                    Text("\(firstName) \(lastName)")
+                        .hookedText(font: .headline)
+                }
                 
                 Spacer()
                 
@@ -110,8 +121,10 @@ struct PostView: View {
         .padding(.vertical, 4)
         
         // MARK: - Full-Screen Comment Modal
-        .fullScreenCover(isPresented: $showingComments) {
-            CommentsModal(postId: postId, commentCount: $commentCount)
+        .sheet(isPresented: $showingComments) {
+            HalfSheetView {
+                CommentsModal(postId: postId, commentCount: $commentCount)
+            }
         }
     }
     
@@ -132,8 +145,8 @@ private struct CommentsModal: View {
     var body: some View {
         NavigationView {
             PostCommentsView(postId: postId)
-                .navigationTitle("Comments")
-                .navigationBarTitleDisplayMode(.inline)
+//                .navigationTitle("Comments")
+//                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Done") { dismiss() }

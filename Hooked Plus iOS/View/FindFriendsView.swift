@@ -139,7 +139,7 @@ private struct FriendRow: View {
             VStack(alignment: .leading) {
                 Text("\(friend.firstName) \(friend.lastName)")
                     .font(.headline)
-                Text(friend.email)
+                Text(friend.handleName)
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }

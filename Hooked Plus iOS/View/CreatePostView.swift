@@ -43,20 +43,35 @@ struct CreatePostView: View {
                 maxImages: maxImages,
                 viewModel: viewModel,
                 onCancel: { dismiss() },
-                onPost: { _ in
-                    viewModel.createPost(
-                        isCatch: isCatch,
-                        description: description,
-                        photos: selectedItems,
-                        species: selectedSpecies,
-                        depth: depth,
-                        weight: weight
-                    )
-                    dismiss()
+                onPost: { isLunker in
+                    Task {
+                        let result = await viewModel.createPost(
+                            isCatch: isCatch,
+                            description: description,
+                            photos: selectedItems,
+                            species: selectedSpecies,
+                            depth: depth,
+                            weight: weight,
+                            isLunker: isLunker
+                        )
+                        
+                        if result {
+                            DispatchQueue.main.async {
+                                dismiss()
+                            }
+                        }
+                    }
                 }
             )
             .navigationTitle("Create Post")
             .background(ColorToken.backgroundSecondary.color)
+            .snackBar(isPresented: Binding(get: {
+                viewModel.state.errorMessage != nil
+            }, set: { value in
+                if !value {
+                    viewModel.state.errorMessage = nil
+                }
+            }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong when creating your post. Please try again.")
         }
     }
 }
@@ -181,9 +196,7 @@ struct PostContentView: View {
                         ScrollView {
                             HStack(spacing: 10) {
                                 buildImage("https://texassharelunker.com/media/images/SL_-_Required_Photo_1.width-500.jpg")
-                                
                                 buildImage("https://texassharelunker.com/media/images/SL_-_Required_Photo_2.width-500.jpg")
-                                
                                 buildImage("https://texassharelunker.com/media/images/SL_-_Optional_Photo_3.width-500.jpg")
                             }.frame(height: 140)
                         }
@@ -192,16 +205,26 @@ struct PostContentView: View {
                         Spacer()
                         
                         Button("Post for Review") {
+                            showLunkerConfirmation = false
                             onPost(true)
+                            
                         }
                         .buttonStyle(PrimaryButtonStyle())
                         
                         Button("Post Without Review") {
+                            showLunkerConfirmation = false
                             onPost(false)
                         }
                         .buttonStyle(OutlineButtonStyle())
                     }
                     .padding(16)
+                    .snackBar(isPresented: Binding(get: {
+                        viewModel.state.errorMessage != nil
+                    }, set: { value in
+                        if !value {
+                            viewModel.state.errorMessage = nil
+                        }
+                    }), type: .error, message: viewModel.state.errorMessage ?? "Something went wrong when creating your post. Please try again.")
                 }
             }
             .loading(isLoading: viewModel.state.loading)
